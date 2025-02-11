@@ -3,9 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <title>Document</title>
+
+
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            principal: '#00d1b2',
+            texto: '#293C39',
+            fondoPrincipal: '#EEF2F1',
+            fondoCards: '#F9FBFA',
+          }
+          }
+        }
+      }
+  </script>
+
 </head>
-<body>
-    
+
+<body class="bg-fondoPrincipal">
+
+  <main class="flex flex-wrap justify-center items-center w-full flex-wrap">
+
+    <section>
+ 
+        <div id="#balance" class="w-96 h-64 bg-fondoCards rounded-lg m-6 shadow-sm ">
+
+            <h1 class="text-2xl p-6 font-sans text-texto font-bold" >Balance</h1>
+
+            <div id="#ganancias" class="flex flex-row " >
+            <p class="text-1xl pl-6 p-3 font-sans text-texto font-regular" >Ganancias</p>
+            <span class="text-1xl pl-6 p-3 font-sans text-green-500	font-regular text-right">+$0</span>
+            </div>
+
+            <div id="#gastos"class="flex flex-row  " >
+            <p class="text-1xl pl-6 p-3 font-sans text-texto font-regular">Gastos</p>
+            <span class="text-1xl pl-6 p-3 font-sans text-red-600 font-regular text-right " >+$0</span>
+            </div>
+
+            <div id="#total"class="flex flex-row " >
+            <p class="text-1xl pl-6 p-3 font-sans text-texto font-bold" >Total</p>
+            <span class="text-1xl pl-6 p-3 font-sans text-texto font-regular text-right" >+$0</span>
+
+            </div>
+
+        </div>
+
+        <div id="#filtros" class="w-96 h-64 bg-fondoCards rounded-lg m-6 shadow-sm ">
+            <h1 class="text-1xl p-6 font-sans text-texto font-bold" >Filtros</h1>
+        </div>
+
+    </section>
+
+    <div id="#operaciones" class="sm:w-96 h-96 lg:w-1/2 lg:h-screen	 bg-fondoCards rounded-lg m-6 shadow-sm ">
+
+        <h1 class="text-3xl p-6 font-sans text-texto font-bold" >Operaciones</h1>
+
+    <section>
+
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+  </main>
 </body>
 </html>
