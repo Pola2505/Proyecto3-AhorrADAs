@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+  <title>Document</title>
 
 
 
@@ -14,64 +15,109 @@
       theme: {
         extend: {
           colors: {
-            principal: '#00d1b2',
+            principal: '#00D1B2',
             texto: '#293C39',
             fondoPrincipal: '#EEF2F1',
             fondoCards: '#F9FBFA',
           }
-          }
         }
       }
+    }
   </script>
 
 </head>
 
 <body class="bg-fondoPrincipal">
 
-  <main class="flex flex-wrap justify-center items-center w-full flex-wrap">
-
-    <section>
- 
-        <div id="#balance" class="w-96 h-64 bg-fondoCards rounded-lg m-6 shadow-sm ">
-
-            <h1 class="text-2xl p-6 font-sans text-texto font-bold" >Balance</h1>
-
-            <div id="#ganancias" class="flex flex-row " >
-            <p class="text-1xl pl-6 p-3 font-sans text-texto font-regular" >Ganancias</p>
-            <span class="text-1xl pl-6 p-3 font-sans text-green-500	font-regular text-right">+$0</span>
-            </div>
-
-            <div id="#gastos"class="flex flex-row  " >
-            <p class="text-1xl pl-6 p-3 font-sans text-texto font-regular">Gastos</p>
-            <span class="text-1xl pl-6 p-3 font-sans text-red-600 font-regular text-right " >+$0</span>
-            </div>
-
-            <div id="#total"class="flex flex-row " >
-            <p class="text-1xl pl-6 p-3 font-sans text-texto font-bold" >Total</p>
-            <span class="text-1xl pl-6 p-3 font-sans text-texto font-regular text-right" >+$0</span>
-
-            </div>
-
-        </div>
-
-        <div id="#filtros" class="w-96 h-64 bg-fondoCards rounded-lg m-6 shadow-sm ">
-            <h1 class="text-1xl p-6 font-sans text-texto font-bold" >Filtros</h1>
-        </div>
-
-    </section>
-
-    <div id="#operaciones" class="sm:w-96 h-96 lg:w-1/2 lg:h-screen	 bg-fondoCards rounded-lg m-6 shadow-sm ">
-
-        <h1 class="text-3xl p-6 font-sans text-texto font-bold" >Operaciones</h1>
+  <main class="flex flex-wrap justify-center items-center w-full h-full flex-wrap">
 
     <section>
 
+      <div id="#balance" class="sm:w-96 h-3/6 bg-fondoCards rounded-lg m-6 shadow-2xl">
+
+        <h1 class="text-2xl p-6 font-sans text-texto font-bold">Balance</h1>
+
+        <div id="#ganancias" class="flex flex-row ">
+          <p class="text-1xl pl-6 p-3 font-sans text-texto font-regular">Ganancias</p>
+          <span class="text-1xl pl-6 p-3 font-sans text-green-500	font-regular text-right">+$0</span>
+        </div>
+
+        <div id="#gastos" class="flex flex-row  ">
+          <p class="text-1xl pl-6 p-3 font-sans text-texto font-regular">Gastos</p>
+          <span class="text-1xl pl-6 p-3 font-sans text-red-600 font-regular text-right ">+$0</span>
+        </div>
+
+        <div id="#total" class="flex flex-row  ">
+          <p class="text-1xl pl-6 p-3 font-sans text-texto font-bold">Total</p>
+          <span class="mb-6 text-1xl pl-6 p-3 font-sans text-texto font-regular text-right">+$0</span>
+        </div>
+
+      </div>
+
+
+      <form id="#filtros" class="w-96	bg-fondoCards rounded-lg m-6 shadow-2xl">
+        <h1 class="text-2xl p-6 font-sans text-texto font-bold">Filtros</h1>
+
+        <div class="m-6 flex flex-col">
+          <label for="tipo" class="mb-3 text-1xl font-sans text-texto font-semibold">Tipo</label>
+          <select id="tipo" class="mb-3 bg-fondoCards border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-texto font-regular ">
+            <option value="todos">Todos</option2>
+            <option value="gasto">Gasto</option>
+            <option value="ganancias">Ganancias</option>
+          </select>
+
+          <div class="flex flex-col">
+            <label for="categorias" class="mb-3 text-1xl font-sans text-texto font-semibold">Categorías</label>
+            <select id="tipo" class="mb-3 bg-fondoCards border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-texto font-regular ">
+              <option value="todas">Todas</option2>
+              <option value="comida">Comida</option>
+              <option value="servicios">Servicios</option>
+              <option value="salidas">Salidas</option2>
+              <option value="educacion">Educación</option>
+              <option value="transporte">Transporte</option>
+              <option value="trabajo">Trabajo</option>
+            </select>
+
+            <div class="flex flex-col" >
+              <label for="desde" class="mb-3 text-1xl font-sans text-texto font-semibold" >Desde</label>
+              <input type="date" id="desde" class="mb-3 bg-fondoCards border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-texto font-regular " />
+            </div>
+
+            <div class="flex flex-col">
+              <label for="ordenar" class="mb-3 text-1xl font-sans text-texto font-semibold">Ordenar por</label>
+              <select id="tipo" class="mb-6 bg-fondoCards border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-texto font-regular ">
+                <option value="masReciente">Más reciente</option2>
+                <option value="menosReciente">Menos reciente</option>
+                <option value="mayorMonto">Mayor monto</option>
+                <option value="menorMonto">Menor monto</option2>
+                <option value="az">A/Z</option>
+                <option value="za">Z/A</option>
+              </select>
+
+
+
+
+      </form>
+
+
     </section>
 
+    <div id="#operaciones" class="sm:w-96 sm:h-screen md:h-screen lg:w-1/2 lg:h-screen bg-fondoCards rounded-lg m-6 shadow-2xl">
 
+      <div>
+      <h1 class="text-3xl p-6 font-sans text-texto font-bold">Operaciones</h1>
+      </div>
 
+      <div>
+      <button id="button-nueva-operacion" class="w-36	h-10 bg-principal sm:text-xs sm:m-5 lg:m-6 lg:text-sm	p-2 font-sans text-white font-regular rounded-lg">+Nueva Operación</button>
+      </div>
 
-
+      <div class="sm:w-60 md:w-72 lg:w-80 flex flex-col justify-center content-center"  >
+      <img src="./imagenes/wallet.svg" >
+      <p class="text-2xl p-6 font-sans text-texto font-regular flex flex-col justify-center items-center" >Sin resultados</p>
+      </div>
+      
+    </div>
 
 
 
@@ -80,4 +126,5 @@
 
   </main>
 </body>
+
 </html>
