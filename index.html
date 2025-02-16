@@ -41,7 +41,7 @@
 
 <body class="bg-bgPrimary">
 
-  <main class="flex flex-wrap items-center justify-center w-full h-full">
+  <main class="flex flex-wrap content-start items-center justify-center w-full h-full ">
 
     <section>
 
@@ -70,7 +70,7 @@
       <div id="#filtros" class="w-72 sm:w-96	bg-bgSecondary rounded-lg m-6 shadow-2xl">
         <div class="flex justify-between" >
           <h1 class="text-2xl p-6 font-sans text-textPrimary font-bold">Filtros</h1>
-          <button class="sm:text-xs sm:m-5 lg:text-sm	p-2 font-sans text-blue-600 font-regular" >Ocultar filtros</button>
+          <button class="m-4 sm:text-xs sm:m-5 lg:text-sm	p-2 font-sans text-blue-600 font-regular" >Ocultar filtros</button>
         </div>
 
         <div class="m-6 flex flex-col">
@@ -113,19 +113,19 @@
     </section>
 
 
-    <section id="#operaciones" class="sm:w-96 sm:h-screen md:h-screen lg:w-1/2 lg:h-screen bg-bgSecondary rounded-lg shadow-2xl m-6">
+    <section id="#operaciones" class="w-72 sm:w-96 sm:h-screen md:h-screen lg:w-1/2 lg:h-screen flex flex-col content-start bg-bgSecondary rounded-lg shadow-2xl">
 
       <div>
       <h1 class="text-3xl p-6 font-sans text-textPrimary font-bold">Operaciones</h1>
       </div>
 
       <div>
-      <button id="button-nueva-operacion" class="w-36	h-10 bg-brandPrimary sm:text-xs sm:m-5 lg:m-6 lg:text-sm	p-2 font-sans text-white font-regular rounded-lg">+Nueva Operación</button>
+      <button id="button-nueva-operacion" class="m-6 sm:w-36 sm:h-10 bg-brandPrimary text-sm sm:text-sm sm:m-5 lg:m-6 lg:text-sm p-2 font-sans text-white font-regular rounded-lg">+Nueva Operación</button>
       </div>
 
-      <div class="sm:w-60 md:w-72 lg:w-80 flex flex-col items-center justify-center content-center"  >
-      <img src="./imagenes/wallet.svg" >
-      <p class="text-2xl p-6 font-sans text-textPrimary font-regular flex flex-col justify-center items-center" >Sin resultados</p>
+      <div>
+      <img class="w-36 sm:w-60 md:w-72 lg:w-80 flex flex-col items-center justify-center content-center"  src="./imagenes/wallet.svg" >
+      <p class="text-2xl p-6 font-sans text-textPrimary font-regular" >Sin resultados</p>
       </div>
       
     </section>
