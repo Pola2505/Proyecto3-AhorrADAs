@@ -6,9 +6,17 @@ function $(element) {
 const $botonFiltros = $("#boton-filtros")
 const $filtros = $("#filtros-contenido")
 
+const $seccionBalance = $('#seccion-balance')
+const $seccionFiltros = $('#seccion-filtros')
+const $seccionOperaciones = $('#seccion-operaciones')
+const $botonNuevaOperacion = $('#boton-nueva-operacion')
+const $seccionNuevaOperacion = $('#seccion-nueva-operacion')
+
+
+
 
 // Función para mostrar y ocultar filtros
-document.addEventListener("DOMContentLoaded", function () {
+
   
     $botonFiltros.addEventListener("click", function () {
       if ($filtros.classList.contains("hidden")) {
@@ -19,7 +27,8 @@ document.addEventListener("DOMContentLoaded", function () {
         $botonFiltros.textContent = "Mostrar filtros";
       }
     });
-  });
+
+
 
 // Funciones para buscar los elementos del DOM
 
@@ -32,6 +41,7 @@ const $categorias = $('#categorias-container');
 const $reportes = $('#reportes-container');
 const $balance = $('#balance-container');
 
+
 // El menu mobile icono 
 
 $('#menu-icono').addEventListener('click', () => {
@@ -43,26 +53,31 @@ $('#menu-icono').addEventListener('click', () => {
 $('#nav-categorias').addEventListener('click', (event) => {
     event.preventDefault();
     mostrarElemento([$categorias]);
-    ocultarElemento([$reportes, $balance]);
+    ocultarElemento([$reportes, $balance, $seccionNuevaOperacion]);
 })
 
 $('#nav-reportes').addEventListener('click', (event) => {
     event.preventDefault();
     mostrarElemento([$reportes]);
-    ocultarElemento([$categorias, $balance]);
+    ocultarElemento([$categorias, $balance, $seccionNuevaOperacion]);
 })
 
 $('#nav-balance').addEventListener('click', (event) => {
     event.preventDefault();
     mostrarElemento([$balance]);
-    ocultarElemento([$reportes, $categorias]);
+    ocultarElemento([$reportes, $categorias, $seccionNuevaOperacion]);
 })
 
 $('#logo').addEventListener('click', () => {
     mostrarElemento([$balance]);
-    ocultarElemento([$reportes, $categorias]);
+    ocultarElemento([$reportes, $categorias, $seccionNuevaOperacion]);
 })
 
+$('#boton-nueva-operacion').addEventListener('click', (event) => {
+  event.preventDefault();
+  mostrarElemento([$seccionNuevaOperacion]);
+  ocultarElemento([$balance, $reportes, $categorias]);
+})
 
 
 //  Funciones auxiliares o generales 
