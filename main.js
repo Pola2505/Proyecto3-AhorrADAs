@@ -1,4 +1,3 @@
-
 function $(element) {
   return document.querySelector(element)
 }
@@ -24,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Funciones para buscar los elementos del DOM
 
-const $ = (element) => document.querySelector(element);
 const $$ = (element) => document.querySelectorAll(element);
 
 // Elementos del DOM
