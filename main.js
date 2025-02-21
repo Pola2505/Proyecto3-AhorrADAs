@@ -1,4 +1,3 @@
-
 function $(element) {
   return document.querySelector(element)
 }
@@ -24,37 +23,58 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Funciones para buscar los elementos del DOM
 
-const $ = (element) => document.querySelector(element);
 const $$ = (element) => document.querySelectorAll(element);
 
 // Elementos del DOM
 
 const $menu = $('#menu');
-const $menuIcono = $('#menu-icono');
-const $navCategorias = $('#nav-categorias');
-const $navReportes = $('#nav-reportes');
 const $categorias = $('#categorias-container');
 const $reportes = $('#reportes-container');
+const $balance = $('#balance-container');
 
 // El menu mobile icono 
 
-$menuIcono.addEventListener('click', () => {
+$('#menu-icono').addEventListener('click', () => {
     $menu.classList.toggle('hidden');
 })
 
-// Es necesario poner el evento preventDefault para todos los links del menu ya que el href hace que la pagina recarga !!! 
+// Vistas - navegacion
 
-$navCategorias.addEventListener('click', (event) => {
+$('#nav-categorias').addEventListener('click', (event) => {
     event.preventDefault();
-    $categorias.classList.toggle('hidden');
-    $reportes.classList.add('hidden');
+    mostrarElemento([$categorias]);
+    ocultarElemento([$reportes, $balance]);
 })
 
-$navReportes.addEventListener('click', (event) => {
+$('#nav-reportes').addEventListener('click', (event) => {
     event.preventDefault();
-    $categorias.classList.add('hidden');
-    $reportes.classList.toggle('hidden');
+    mostrarElemento([$reportes]);
+    ocultarElemento([$categorias, $balance]);
+})
+
+$('#nav-balance').addEventListener('click', (event) => {
+    event.preventDefault();
+    mostrarElemento([$balance]);
+    ocultarElemento([$reportes, $categorias]);
+})
+
+$('#logo').addEventListener('click', () => {
+    mostrarElemento([$balance]);
+    ocultarElemento([$reportes, $categorias]);
 })
 
 
 
+//  Funciones auxiliares o generales 
+
+const mostrarElemento = (selectors) => {
+    for (const selector of selectors) {
+      selector.classList.remove('hidden');
+    }
+};
+
+const ocultarElemento = (selectors) => {
+    for (const selector of selectors) {
+      selector.classList.add('hidden');
+    }
+};
