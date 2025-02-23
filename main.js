@@ -17,7 +17,6 @@ const $seccionNuevaOperacion = $('#seccion-nueva-operacion')
 
 // Función para mostrar y ocultar filtros
 
-  
     $botonFiltros.addEventListener("click", function () {
       if ($filtros.classList.contains("hidden")) {
         $filtros.classList.remove("hidden");

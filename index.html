@@ -69,7 +69,7 @@
 
     <main>
 
-        <section id="balance-container" class="flex flex-wrap p-6">
+        <section id="balance-container" class="flex flex-wrap justify-center p-6">
 
             <!-- Sección Balance -->
             <section>
@@ -97,15 +97,15 @@
 
                 <!-- Sección Filtros -->
 
-                <div id="seccion-filtros" class="w-72 sm:w-96	bg-bgSecondary rounded-lg m-6 shadow-2xl">
+                <div id="seccion-filtros" class="w-72 sm:w-96 bg-bgSecondary rounded-lg m-6 shadow-2xl">
                     <div class="flex justify-between">
                         <h1 class="text-2xl p-6 font-sans text-textPrimary font-bold">Filtros</h1>
                         <button id="boton-filtros"
-                            class="m-4 sm:text-xs sm:m-5 lg:text-sm	p-2 font-sans text-blue-600 font-regular">Mostrar
+                            class="m-4 sm:text-xs sm:m-5 lg:text-sm	p-2 font-sans text-blue-600 font-regular">Ocultar
                             filtros</button>
                     </div>
 
-                    <div id="filtros-contenido" class="hidden">
+                    <div id="filtros-contenido">
                         <div class="m-6 flex flex-col">
                             <label for="filtro-tipo"
                                 class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Tipo</label>
@@ -159,17 +159,18 @@
             <!-- Sección Operaciones -->
 
             <section id="seccion-operaciones"
-            class="w-72 sm:w-96 lg:w-1/2 bg-bgSecondary rounded-lg shadow-2xl p-6 m-6">
+            class="flex flex-col max-h-screen min-h-screen lg:w-1/2 bg-bgSecondary rounded-lg shadow-2xl p-6 m-6">
                 <h1 class="text-3xl font-bold text-textPrimary">Operaciones</h1>
 
                 <button id="boton-nueva-operacion"
-                    class=" w-30 sm:w-30 bg-brandPrimary text-white text-1xl font-medium rounded-lg p-3 mt-4">
+                    class=" w-30 sm:w-30 lg:w-48 bg-brandPrimary text-white text-1xl font-medium rounded-lg p-3 mt-10">
                     + Nueva Operación
                 </button>
 
                 <div class="flex flex-col items-center mt-6">
                     <img src="./imagenes/wallet.svg" alt="Ilustración de billetera" class="w-40 sm:w-60">
-                    <p class="text-2xl text-textPrimary mt-4 mb-6">Sin resultados</p>
+                    <p class="text-2xl text-textPrimary mt-4 mb-2">Sin resultados</p>
+                    <p class="text-1xl text-textPrimary mb-6"> Cambia los filtros o agrega operaciones </p>
                 </div>
             </section>
         </section>
