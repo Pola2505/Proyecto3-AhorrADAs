@@ -1,3 +1,5 @@
+import funciones from "./funciones.js"
+
 function $(element) {
   return document.querySelector(element)
 }
@@ -11,6 +13,15 @@ const $seccionFiltros = $('#seccion-filtros')
 const $seccionOperaciones = $('#seccion-operaciones')
 const $botonNuevaOperacion = $('#boton-nueva-operacion')
 const $seccionNuevaOperacion = $('#seccion-nueva-operacion')
+
+const $menu = $('#menu');
+const $categorias = $('#categorias-container');
+const $reportes = $('#reportes-container');
+const $balance = $('#balance-container');
+
+
+const $crearNuevaOperacion = $('#crear-nueva-operacion');
+const $operacionesCargadas = $('#operaciones-cargadas');
 
 
 
@@ -35,10 +46,7 @@ const $$ = (element) => document.querySelectorAll(element);
 
 // Elementos del DOM
 
-const $menu = $('#menu');
-const $categorias = $('#categorias-container');
-const $reportes = $('#reportes-container');
-const $balance = $('#balance-container');
+
 
 
 // El menu mobile icono 
@@ -92,3 +100,48 @@ const ocultarElemento = (selectors) => {
       selector.classList.add('hidden');
     }
 };
+
+
+
+
+//  Funcion de creacion de una nueva operacion
+
+$crearNuevaOperacion.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+
+  const nuevaOperacion = {
+    id: crypto.randomUUID(),
+    descripcion: evento.target[0].value,
+    monto: Number(evento.target[1].value),
+    tipo: evento.target[2].value,
+    categoria: evento.target[3].value,
+    fecha: dayjs(evento.target[4].value).format("YYYY-MM-DD")
+  }
+
+  funciones.agregarOperacion(nuevaOperacion)
+
+  const datos = funciones.obtenerDatos("operaciones")
+  pintarDatos(datos)
+})
+
+
+/* Funcion que mostrara los datos en pantalla */
+function pintarDatos(array) {
+
+  $operacionesCargadas.innerHTML = "";
+  for (const operacion of array) {
+    $operacionesCargadas.innerHTML += `<div class="flex w-full">
+      <p> ${operacion.descripcion} </p>
+      <p> ${operacion.categoria} </p>
+      <p>${operacion.fecha} </p>
+      <p>${operacion.monto}</p>
+
+      <button>Agregar</button>
+      <button>Eliminar</button>
+    </div>`
+  }
+
+  mostrarElemento([$balance]);
+  ocultarElemento([$seccionNuevaOperacion]);
+
+}

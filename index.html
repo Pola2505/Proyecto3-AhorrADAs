@@ -167,7 +167,8 @@
                     + Nueva Operación
                 </button>
 
-                <div class="flex flex-col items-center mt-6">
+
+                <div id="operaciones-cargadas" class="flex flex-col w-full items-center mt-6">
                     <img src="./imagenes/wallet.svg" alt="Ilustración de billetera" class="w-40 sm:w-60">
                     <p class="text-2xl text-textPrimary mt-4 mb-2">Sin resultados</p>
                     <p class="text-1xl text-textPrimary mb-6"> Cambia los filtros o agrega operaciones </p>
@@ -179,10 +180,10 @@
 
          <!-- Sección Nueva operacion -->
 
-         <section id="seccion-nueva-operacion"
+         <section  id="seccion-nueva-operacion"
           class="hidden flex flex-col justify-start h-screen mt-20 md:mx-10 lg:mx-20 xl:mx-64 ">
 
-          <div class="bg-bgSecondary rounded-lg p-8 shadow-2xl mx-12">
+          <form id="crear-nueva-operacion" class="bg-bgSecondary rounded-lg p-8 shadow-2xl mx-12">
             <h2 class="text-2xl font-bold text-textPrimary mb-10 tracking-wide md:text-4xl xl:text-[40px]">Nueva Operacion</h2>
 
                 <div>
@@ -231,13 +232,13 @@
 
 
             <div class="mt-3 flex justify-end gap-2">
-                <button class="p-2 px-3 flex-none bg-brandPrimary rounded text-white"
+                <button id="boton-agregar" class="p-2 px-3 flex-none bg-brandPrimary rounded text-white"
                 id="agregar-operacion-btn">Agregar</button>
                 <button class="p-2 px-3 flex-none border-solid boder-2 rounded text-textPrimary"
                 id="cancelar-operacion-btn">cancelar</button>
             </div>
 
-        </div>
+        </form>
          </section>
 
 
