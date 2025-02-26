@@ -23,6 +23,9 @@ const $balance = $('#balance-container');
 const $crearNuevaOperacion = $('#crear-nueva-operacion');
 const $operacionesCargadas = $('#operaciones-cargadas');
 
+const $selectFiltroTipo = $('#select-filtro-tipo');
+const $selectFiltroCategorias = $('#select-filtro-categorias');
+
 
 
 
@@ -125,6 +128,42 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
 })
 
 
+
+
+
+/* Filtro por tipo de gasto o ganancia*/
+
+$selectFiltroTipo.addEventListener("input", (e) => {
+  const datos = obtenerDatos("operaciones")
+  if(e.target.value !== "all") {
+    const tipoFiltrado = datos.filter(elem => elem.type === e.target.value)
+    pintarDatos(tipoFiltrado)
+  } else {
+    pintarDatos(datos)
+  }
+})
+
+/* Filtro por tipo de categoria*/
+$selectFiltroCategorias.addEventListener("input", (e) => {
+  const datos = obtenerDatos("operaciones")
+  if(e.target.value !== "all") {
+    const categoriaFiltrada = datos.filter(elem => elem.type === e.target.value)
+    pintarDatos(categoriaFiltrada)
+  } else {
+    pintarDatos(datos)
+  }
+})
+
+
+
+
+
+
+
+
+
+
+
 /* Funcion que mostrara los datos en pantalla */
 function pintarDatos(array) {
 
@@ -145,3 +184,4 @@ function pintarDatos(array) {
   ocultarElemento([$seccionNuevaOperacion]);
 
 }
+
