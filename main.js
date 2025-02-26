@@ -128,7 +128,16 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
 })
 
 
-
+/* FILTROS */
+$selectFilterType.addEventListener("input", (e) => {
+  const datos = obtenerDatos("ventas")
+  if(e.target.value !== "all") {
+    const ventasFiltradas = datos.filter(elem => elem.type === e.target.value)
+    pintarDatos(ventasFiltradas)
+  } else {
+    pintarDatos(datos)
+  }
+})
 
 
 /* Filtro por tipo de gasto o ganancia*/
@@ -142,23 +151,6 @@ $selectFiltroTipo.addEventListener("input", (e) => {
     pintarDatos(datos)
   }
 })
-
-/* Filtro por tipo de categoria*/
-$selectFiltroCategorias.addEventListener("input", (e) => {
-  const datos = obtenerDatos("operaciones")
-  if(e.target.value !== "all") {
-    const categoriaFiltrada = datos.filter(elem => elem.type === e.target.value)
-    pintarDatos(categoriaFiltrada)
-  } else {
-    pintarDatos(datos)
-  }
-})
-
-
-
-
-
-
 
 
 
@@ -185,3 +177,9 @@ function pintarDatos(array) {
 
 }
 
+
+window.onload = () => {
+  const datos = funciones.obtenerDatos("operaciones")
+
+  pintarDatos(datos);
+} 
