@@ -19,10 +19,17 @@ function obtenerDatos(key) {
     return datos.filter(elem => elem.tipo === tipo)
  }
 
+ function filtrarPorCategoria(categoria) {
+  const datos = obtenerDatos("operaciones")
+  return datos.filter(elem => elem.categoria === categoria)
+}
+
+
 
   export default {
     obtenerDatos,
     guardarDatos,
     agregarOperacion,
-    filtrarPorTipo
+    filtrarPorTipo,
+    filtrarPorCategoria
   }
