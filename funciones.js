@@ -16,7 +16,7 @@ function obtenerDatos(key) {
 
  function filtrarPorTipo(tipo) {
     const datos = obtenerDatos("operaciones")
-    return datos.filter(elem => elem.type === tipo)
+    return datos.filter(elem => elem.tipo === tipo)
  }
 
 

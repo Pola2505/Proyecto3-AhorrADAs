@@ -24,6 +24,7 @@ const $crearNuevaOperacion = $('#crear-nueva-operacion');
 const $operacionesCargadas = $('#operaciones-cargadas');
 
 const $selectFiltroTipo = $('#select-filtro-tipo');
+console.log($selectFiltroTipo)
 const $selectFiltroCategorias = $('#select-filtro-categorias');
 
 
@@ -134,9 +135,11 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
 /* Filtro por tipo de gasto o ganancia*/
 
 $selectFiltroTipo.addEventListener("input", (e) => {
-  const datos = obtenerDatos("operaciones")
+  const datos = funciones.obtenerDatos("operaciones")
+  console.log(datos)
+  console.log(e.target.value)
   if(e.target.value !== "all") {
-    const tipoFiltrado = datos.filter(elem => elem.type === e.target.value)
+    const tipoFiltrado = datos.filter(elem => elem.tipo === e.target.value)
     pintarDatos(tipoFiltrado)
   } else {
     pintarDatos(datos)
