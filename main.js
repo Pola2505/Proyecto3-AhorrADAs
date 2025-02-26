@@ -128,16 +128,7 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
 })
 
 
-/* FILTROS */
-$selectFilterType.addEventListener("input", (e) => {
-  const datos = obtenerDatos("ventas")
-  if(e.target.value !== "all") {
-    const ventasFiltradas = datos.filter(elem => elem.type === e.target.value)
-    pintarDatos(ventasFiltradas)
-  } else {
-    pintarDatos(datos)
-  }
-})
+
 
 
 /* Filtro por tipo de gasto o ganancia*/
