@@ -24,6 +24,41 @@ function obtenerDatos(key) {
   return datos.filter(elem => elem.categoria === categoria)
 }
 
+function filtrarPorFecha(fecha) {
+  const datos = obtenerDatos("operaciones")
+  return datos.filter(elem => elem.fecha === fecha)
+}
+
+
+// 1️⃣ Definir la función ordenarDatos antes de usarla
+function ordenarDatos(criterio) {
+  let datos = funciones.obtenerDatos("operaciones");
+
+  if (!Array.isArray(datos)) {
+    return [];
+  }
+
+  return datos.sort((a, b) => {
+    switch (criterio) {
+      case "masReciente":
+        return new Date(b.fecha) - new Date(a.fecha);
+      case "menosReciente":
+        return new Date(a.fecha) - new Date(b.fecha);
+      case "mayorMonto":
+        return b.monto - a.monto;
+      case "menorMonto":
+        return a.monto - b.monto;
+      case "az":
+        return a.descripcion.localeCompare(b.descripcion);
+      case "za":
+        return b.descripcion.localeCompare(a.descripcion);
+      default:
+        return 0;
+    }
+  });
+}
+
+
 
 
   export default {
@@ -31,5 +66,7 @@ function obtenerDatos(key) {
     guardarDatos,
     agregarOperacion,
     filtrarPorTipo,
-    filtrarPorCategoria
+    filtrarPorCategoria,
+    filtrarPorFecha,
+    ordenarDatos
   }

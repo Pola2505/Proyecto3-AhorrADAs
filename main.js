@@ -25,6 +25,12 @@ const $operacionesCargadas = $('#operaciones-cargadas');
 
 const $selectFiltroTipo = $('#select-filtro-tipo');
 const $selectFiltroCategorias = $('#select-filtro-categorias');
+const $filtroDesde = $('#filtro-desde');
+const $selectFiltroOrden = $('#select-filtro-orden');
+
+
+
+
 
 
 
@@ -145,6 +151,9 @@ $selectFiltroTipo.addEventListener("input", (e) => {
   }
 })
 
+
+/* Filtro por categorias*/
+
 $selectFiltroCategorias.addEventListener("input", (e) => {
   const datos = funciones.obtenerDatos("operaciones")
   if(e.target.value !== "all") {
@@ -154,6 +163,35 @@ $selectFiltroCategorias.addEventListener("input", (e) => {
     pintarDatos(datos)
   }
 })
+
+
+/* Filtro por fecha*/
+
+$filtroDesde.addEventListener("input", (e) => {
+  const datos = funciones.obtenerDatos("operaciones"); // Obtener todas las operaciones
+  const fechaSeleccionada = e.target.value;
+
+  if (fechaSeleccionada) {
+    // Filtrar por fecha
+    const datosFiltrados = datos.filter(operacion => operacion.fecha >= fechaSeleccionada);
+    pintarDatos(datosFiltrados);
+  } else {
+    // Si no hay fecha seleccionada, mostrar todos los datos
+    pintarDatos(datos);
+  }
+});
+
+
+
+
+
+// 2️⃣ Agregar el evento después de definir ordenarDatos
+
+$selectFiltroOrden.addEventListener("input", (e) => {
+  const datosOrdenados = ordenarDatos(e.target.value);
+  pintarDatos(datosOrdenados);
+});
+
 
 
 
