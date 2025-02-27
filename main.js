@@ -25,9 +25,11 @@ const $operacionesCargadas = $('#operaciones-cargadas');
 
 const $selectFiltroTipo = $('#select-filtro-tipo');
 const $selectFiltroCategorias = $('#select-filtro-categorias');
+const $filtroDesde = $('#filtro-desde');
 const $selectFiltroOrden = $('#select-filtro-orden');
 
-const $filtroDesde = $('#filtro-desde');
+
+
 
 
 
@@ -168,7 +170,7 @@ $selectFiltroCategorias.addEventListener("input", (e) => {
 $filtroDesde.addEventListener("input", (e) => {
   const datos = funciones.obtenerDatos("operaciones"); // Obtener todas las operaciones
   const fechaSeleccionada = e.target.value;
-  
+
   if (fechaSeleccionada) {
     // Filtrar por fecha
     const datosFiltrados = datos.filter(operacion => operacion.fecha >= fechaSeleccionada);
@@ -183,8 +185,12 @@ $filtroDesde.addEventListener("input", (e) => {
 
 
 
+// 2️⃣ Agregar el evento después de definir ordenarDatos
 
-
+$selectFiltroOrden.addEventListener("input", (e) => {
+  const datosOrdenados = ordenarDatos(e.target.value);
+  pintarDatos(datosOrdenados);
+});
 
 
 
