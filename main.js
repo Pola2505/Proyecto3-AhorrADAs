@@ -134,32 +134,26 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
 /* Filtro por tipo de gasto o ganancia*/
 
 $selectFiltroTipo.addEventListener("input", (e) => {
-  const datos = obtenerDatos("operaciones")
+  const datos = funciones.obtenerDatos("operaciones")
+  // console.log(datos)
+  // console.log(e.target.value)
   if(e.target.value !== "all") {
-    const tipoFiltrado = datos.filter(elem => elem.type === e.target.value)
+    const tipoFiltrado = datos.filter(elem => elem.tipo === e.target.value)
     pintarDatos(tipoFiltrado)
   } else {
     pintarDatos(datos)
   }
 })
 
-/* Filtro por tipo de categoria*/
 $selectFiltroCategorias.addEventListener("input", (e) => {
-  const datos = obtenerDatos("operaciones")
+  const datos = funciones.obtenerDatos("operaciones")
   if(e.target.value !== "all") {
-    const categoriaFiltrada = datos.filter(elem => elem.type === e.target.value)
+    const categoriaFiltrada = datos.filter(elem => elem.categoria === e.target.value)
     pintarDatos(categoriaFiltrada)
   } else {
     pintarDatos(datos)
   }
 })
-
-
-
-
-
-
-
 
 
 
@@ -185,3 +179,9 @@ function pintarDatos(array) {
 
 }
 
+
+window.onload = () => {
+  const datos = funciones.obtenerDatos("operaciones")
+
+  pintarDatos(datos);
+} 

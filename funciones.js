@@ -14,15 +14,17 @@ function obtenerDatos(key) {
   }
 
 
-  function filtrarPorTipo(tipo) {
+ function filtrarPorTipo(tipo) {
     const datos = obtenerDatos("operaciones")
-    return datos.filter(elem => elem.type === tipo)
-  }
-  
-  function filtrarPorCategoria(categoria) {
-    const datos = obtenerDatos("operaciones")
-    return datos.filter(elem => elem.type === categoria)
-  }
+    return datos.filter(elem => elem.tipo === tipo)
+ }
+
+ function filtrarPorCategoria(categoria) {
+  const datos = obtenerDatos("operaciones")
+  return datos.filter(elem => elem.categoria === categoria)
+}
+
+
 
   export default {
     obtenerDatos,
