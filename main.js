@@ -27,7 +27,7 @@ const $selectFiltroTipo = $('#select-filtro-tipo');
 const $selectFiltroCategorias = $('#select-filtro-categorias');
 const $filtroDesde = $('#filtro-desde');
 const $selectFiltroOrden = $('#select-filtro-orden');
-
+const $columnasCategorias = $('#columnas-categorias');
 
 
 
@@ -188,10 +188,9 @@ $filtroDesde.addEventListener("input", (e) => {
 // 2️⃣ Agregar el evento después de definir ordenarDatos
 
 $selectFiltroOrden.addEventListener("input", (e) => {
-  const datosOrdenados = ordenarDatos(e.target.value);
+  const datosOrdenados = funciones.ordenarDatos(e.target.value);
   pintarDatos(datosOrdenados);
 });
-
 
 
 
@@ -201,17 +200,19 @@ function pintarDatos(array) {
 
   $operacionesCargadas.innerHTML = "";
   for (const operacion of array) {
-    $operacionesCargadas.innerHTML += `<div class="flex w-full">
-      <p> ${operacion.descripcion} </p>
-      <p> ${operacion.categoria} </p>
-      <p>${operacion.fecha} </p>
-      <p>${operacion.monto}</p>
-
-      <button>Agregar</button>
-      <button>Eliminar</button>
-    </div>`
+    $operacionesCargadas.innerHTML += `<div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
+        <span class="text-left font-semibold w-1/4">${operacion.descripcion}</span>
+        <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${operacion.categoria}</span>
+        <span class="text-center text-sm w-1/6">${operacion.fecha}</span>
+        <span class="text-center text-red-500 font-semibold w-1/6">$${operacion.monto}</span>
+        <div class="flex gap-4 text-xs text-pink-500 w-1/6 justify-end">
+          <button id="${operacion.id} class="hover:underline editar-boton">Editar</button>
+          <button id="${operacion.id} class="hover:underline eliminar-boton">Eliminar</button>
+        </div>
+      </div>`
   }
 
+  mostrarElemento([$columnasCategorias]);
   mostrarElemento([$balance]);
   ocultarElemento([$seccionNuevaOperacion]);
 
@@ -222,4 +223,4 @@ window.onload = () => {
   const datos = funciones.obtenerDatos("operaciones")
 
   pintarDatos(datos);
-} 
+}
