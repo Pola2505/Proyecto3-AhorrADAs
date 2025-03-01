@@ -213,6 +213,9 @@ function pintarDatos(array) {
   mostrarElemento([$columnasCategorias]);
   mostrarElemento([$balance]);
   ocultarElemento([$seccionNuevaOperacion]);
+  
+  actualizarTotalBalance();
+
 
 }
 
