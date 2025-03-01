@@ -69,7 +69,7 @@
 
     <main>
 
-        <section id="balance-container" class="flex flex-wrap justify-center p-6">
+        <section id="balance-container" class="flex flex-wrap justify-center p-6 w-full">
 
             <!-- Sección Balance -->
             <section>
@@ -78,19 +78,20 @@
 
                     <h1 class="text-2xl p-6 font-sans text-textPrimary font-bold">Balance</h1>
 
-                    <div id="ganancias" class="w-full flex justify-between  ">
-                        <p class="text-1xl  p-6 font-sans text-textPrimary font-regular text-left">Ganancias</p>
-                        <span class="text-1xl p-6 font-sans text-successPrimary	font-regular text-right">+$0</span>
+                    <div class="w-full flex justify-between  ">
+                        <p class="text-1xl  p-6 font-sans text-textPrimary font-regular text-left">Ganancia</p>
+                        <span id="ganancias" class="text-1xl p-6 font-sans text-successPrimary	font-regular text-right">+$0</span>
                     </div>
 
-                    <div id="gastos" class="w-full flex justify-between  ">
-                        <p class="text-1xl p-6 font-sans text-texto font-regular">Gastos</p>
-                        <span class="text-1xl p-6 font-sans text-dangerPrimary font-regular ">+$0</span>
+
+                    <div class="w-full flex justify-between  ">
+                        <p class="text-1xl  p-6 font-sans text-textPrimary font-regular text-left">Gasto</p>
+                        <span id="gastos" class="text-1xl p-6 font-sans text-dangerPrimary	font-regular text-right">-$0</span>
                     </div>
 
-                    <div id="total" class="w-full flex justify-between  ">
+                    <div class="w-full flex justify-between  ">
                         <p class="text-1xl  p-6 font-sans text-textPrimary font-bold text-left">Total</p>
-                        <span class="mb-6 text-1xl  p-6 font-sans text-textPrimary font-regular text-right">+$0</span>
+                        <span id="total" class="mb-6 text-1xl  p-6 font-sans text-textPrimary font-regular text-right">$0</span>
                     </div>
 
                 </div>
@@ -109,9 +110,9 @@
                         <div class="m-6 flex flex-col">
                             <label for="filtro-tipo"
                                 class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Tipo</label>
-                            <select id="filtro-tipo"
+                            <select id="select-filtro-tipo"
                                 class="mb-3 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-texto font-regular ">
-                                <option value="todos">Todos</option>
+                                <option value="all" default>Todos</option>
                                 <option value="gasto">Gasto</option>
                                 <option value="ganancias">Ganancias</option>
                             </select>
@@ -119,9 +120,9 @@
                             <div class="flex flex-col">
                                 <label for="filtro-categorias"
                                     class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Categorías</label>
-                                <select id="filtro-categorias"
+                                <select id="select-filtro-categorias"
                                     class="mb-3 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular ">
-                                    <option value="todas">Todas</option2>
+                                    <option value="all" default>Todas</option2>
                                     <option value="comida">Comida</option>
                                     <option value="servicios">Servicios</option>
                                     <option value="salidas">Salidas</option2>
@@ -141,7 +142,7 @@
                                     <label for="filtro-orden"
                                         class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Ordenar
                                         por</label>
-                                    <select id="filtro-orden"
+                                    <select id="select-filtro-orden"
                                         class="mb-6 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular ">
                                         <option value="masReciente">Más reciente</option2>
                                         <option value="menosReciente">Menos reciente</option>
@@ -159,15 +160,24 @@
             <!-- Sección Operaciones -->
 
             <section id="seccion-operaciones"
-            class="flex flex-col w-96 lg:w-1/2 max-h-screen min-h-screen bg-bgSecondary rounded-lg shadow-2xl p-6 m-6">
+                class="flex flex-col relative grow lg:w-1/2 max-h-screen min-h-screen bg-bgSecondary rounded-lg shadow-2xl p-6 m-6">
                 <h1 class="text-3xl font-bold text-textPrimary xl:text-[40px] ">Operaciones</h1>
 
                 <button id="boton-nueva-operacion"
-                    class=" w-44 sm:w-44 md:w-56 lg:w-48 bg-brandPrimary text-white text-1xl font-medium rounded-lg p-3 mt-10">
+                    class="absolute -top-5 right-10 w-44 sm:w-44 md:w-56 lg:w-48 bg-brandPrimary text-white text-1xl font-medium rounded-lg p-3 mt-10">
                     + Nueva Operación
                 </button>
 
-                <div class="flex flex-col items-center mt-6">
+                <div id="columnas-categorias" class="flex flex-row justify-between pt-10 pb-2 px-5 hidden">
+                    <p class="font-semibold text-left">Descripción</p>
+                    <p class="font-semibold text-left">Categoría</p>
+                    <p class="font-semibold text-right">Fecha</p>
+                    <p class="font-semibold text-right">Monto</p>
+                    <p class="font-semibold text-right">Acciones</p>
+                </div>
+
+
+                <div id="operaciones-cargadas" class="flex flex-col w-full items-center mt-6">
                     <img src="./imagenes/wallet.svg" alt="Ilustración de billetera" class="w-40 sm:w-60">
                     <p class="text-2xl text-textPrimary mt-4 mb-2">Sin resultados</p>
                     <p class="text-1xl text-textPrimary mb-6"> Cambia los filtros o agrega operaciones </p>
@@ -177,22 +187,27 @@
 
 
 
-         <!-- Sección Nueva operacion -->
+        <!-- Sección Nueva operacion -->
 
-         <section id="seccion-nueva-operacion"
-          class="hidden flex flex-col justify-start h-screen mt-20 md:mx-10 lg:mx-20 xl:mx-64 ">
+        <section id="seccion-nueva-operacion"
+            class="hidden flex flex-col justify-start h-screen mt-20 md:mx-10 lg:mx-20 xl:mx-64 ">
 
-          <div class="bg-bgSecondary rounded-lg p-8 shadow-2xl mx-12">
-            <h2 class="text-2xl font-bold text-textPrimary mb-10 tracking-wide md:text-4xl xl:text-[40px]">Nueva Operacion</h2>
+            <form id="crear-nueva-operacion" class="bg-bgSecondary rounded-lg p-8 shadow-2xl mx-12">
+                <h2 class="text-2xl font-bold text-textPrimary mb-10 tracking-wide md:text-4xl xl:text-[40px]">Nueva
+                    Operacion</h2>
 
                 <div>
-                    <label for="categoria-input" class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Descripción</label>
-                    <input type="text" id="operacion-input" class="w-full mb-4 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular"></input>
+                    <label for="categoria-input"
+                        class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Descripción</label>
+                    <input type="text" id="operacion-input"
+                        class="w-full mb-4 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular"></input>
                 </div>
 
                 <div>
-                    <label for="operacion-monto" class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Monto</label>
-                    <input type="number" id="operacion-monto" class="w-full mb-4 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular " />
+                    <label for="operacion-monto"
+                        class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Monto</label>
+                    <input type="number" id="operacion-monto"
+                        class="w-full mb-4 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular " />
                 </div>
 
 
@@ -204,41 +219,109 @@
                         <option value="gasto">Gasto</option>
                         <option value="ganancias">Ganancias</option>
                     </select>
-                    </div>
+                </div>
 
-                    <div>
-                        <label for="operacion-categorias"
-                            class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Categorías</label>
-                        <select id="filtro-categorias"
-                            class="w-full mb-4 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular ">
-                            <option value="todas">Todas</option2>
-                            <option value="comida">Comida</option>
-                            <option value="servicios">Servicios</option>
-                            <option value="salidas">Salidas</option2>
-                            <option value="educacion">Educación</option>
-                            <option value="transporte">Transporte</option>
-                            <option value="trabajo">Trabajo</option>
-                        </select>
-                    </div>
+                <div>
+                    <label for="operacion-categorias"
+                        class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Categorías</label>
+                    <select id="filtro-categorias"
+                        class="w-full mb-4 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular ">
+                        <option value="todas">Todas</option2>
+                        <option value="comida">Comida</option>
+                        <option value="servicios">Servicios</option>
+                        <option value="salidas">Salidas</option2>
+                        <option value="educacion">Educación</option>
+                        <option value="transporte">Transporte</option>
+                        <option value="trabajo">Trabajo</option>
+                    </select>
+                </div>
 
-                    <div>
-                        <label for="filtro-desde"
-                            class="mb-4 text-1xl font-sans text-textPrimary font-semibold">Fecha</label>
-                        <input type="date" id="filtro-desde"
-                            class="w-full mb-3 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular " />
-                    </div>
+                <div>
+                    <label for="filtro-desde"
+                        class="mb-4 text-1xl font-sans text-textPrimary font-semibold">Fecha</label>
+                    <input type="date" id="filtro-desde"
+                        class="w-full mb-3 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular " />
+                </div>
 
 
 
-            <div class="mt-3 flex justify-end gap-2">
-                <button class="p-2 px-3 flex-none bg-brandPrimary rounded text-white"
-                id="agregar-operacion-btn">Agregar</button>
-                <button class="p-2 px-3 flex-none border-solid boder-2 rounded text-textPrimary"
-                id="cancelar-operacion-btn">cancelar</button>
-            </div>
+                <div class="mt-3 flex justify-end gap-2">
+                    <button id="boton-agregar" class="p-2 px-3 flex-none bg-brandPrimary rounded text-white"
+                        id="agregar-operacion-btn">Agregar</button>
+                    <button class="p-2 px-3 flex-none border-solid boder-2 rounded text-textPrimary"
+                        id="cancelar-operacion-btn">cancelar</button>
+                </div>
 
-        </div>
-         </section>
+            </form>
+        </section>
+
+        <!-- Sección Editar operacion -->
+
+        <section id="seccion-editar-operacion"
+            class="hidden flex flex-col justify-start h-screen mt-20 md:mx-10 lg:mx-20 xl:mx-64 ">
+
+            <form id="editar-nueva-operacion" class="bg-bgSecondary rounded-lg p-8 shadow-2xl mx-12">
+                <h2 class="text-2xl font-bold text-textPrimary mb-10 tracking-wide md:text-4xl xl:text-[40px]">Editar
+                    Operacion</h2>
+
+                <div>
+                    <label for="categoria-input"
+                        class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Descripción</label>
+                    <input type="text" id="operacion-input"
+                        class="w-full mb-4 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular"></input>
+                </div>
+
+                <div>
+                    <label for="operacion-monto"
+                        class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Monto</label>
+                    <input type="number" id="operacion-monto"
+                        class="w-full mb-4 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular " />
+                </div>
+
+
+                <div>
+                    <label for="operacion-tipo"
+                        class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Tipo</label>
+                    <select id="operacion-tipo"
+                        class="w-full mb-4 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular ">
+                        <option value="gasto">Gasto</option>
+                        <option value="ganancias">Ganancias</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="operacion-categorias"
+                        class="mb-3 text-1xl font-sans text-textPrimary font-semibold">Categorías</label>
+                    <select id="filtro-categorias"
+                        class="w-full mb-4 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular ">
+                        <option value="todas">Todas</option2>
+                        <option value="comida">Comida</option>
+                        <option value="servicios">Servicios</option>
+                        <option value="salidas">Salidas</option2>
+                        <option value="educacion">Educación</option>
+                        <option value="transporte">Transporte</option>
+                        <option value="trabajo">Trabajo</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="filtro-desde"
+                        class="mb-4 text-1xl font-sans text-textPrimary font-semibold">Fecha</label>
+                    <input type="date" id="filtro-desde"
+                        class="w-full mb-3 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular " />
+                </div>
+
+
+
+                <div class="mt-3 flex justify-end gap-2">
+                    <button id="boton-agregar" class="p-2 px-3 flex-none bg-brandPrimary rounded text-white"
+                        id="editar-operacion-btn">Editar</button>
+                    <button class="p-2 px-3 flex-none border-solid boder-2 rounded text-textPrimary"
+                        id="cancelar-operacion-btn">cancelar</button>
+                </div>
+
+            </form>
+        </section>
 
 
         <!-- CATEGORIAS -->
@@ -320,7 +403,7 @@
 
     </main>
 
-<script type="module" src="./main.js"></script>   
+    <script type="module" src="./main.js"></script>
 
 </body>
 
