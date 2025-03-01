@@ -213,7 +213,7 @@ function pintarDatos(array) {
   mostrarElemento([$columnasCategorias]);
   mostrarElemento([$balance]);
   ocultarElemento([$seccionNuevaOperacion]);
-  
+
   actualizarTotalBalance();
 
 
@@ -234,8 +234,8 @@ const actualizarTotalBalance = () => {
   //  El total es: GANANCIAS - GASTOS
   const totalBalance = totalDatosGanancias - totalDatosGastos;
 
-  $ganancias.innerText = `$ ${totalDatosGanancias}`;
-  $gastos.innerText = `$ ${totalDatosGastos}`;
+  $ganancias.innerText = `$+ ${totalDatosGanancias}`;
+  $gastos.innerText = `$- ${totalDatosGastos}`;
   $total.innerText = `$ ${totalBalance}`; 
 };
 
