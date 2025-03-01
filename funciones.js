@@ -13,10 +13,9 @@ function agregarOperacion(objetoNuevaOperacion) {
   guardarDatos("operaciones", [...datos, objetoNuevaOperacion])
 }
 
-
 function filtrarPorTipo(tipo) {
-  const datos = obtenerDatos("operaciones")
-  return datos.filter(elem => elem.tipo === tipo)
+  const datos = obtenerDatos("operaciones");
+  return datos.filter(elem => elem.tipo === tipo);
 }
 
 function filtrarPorCategoria(categoria) {
@@ -57,11 +56,6 @@ return datos.sort((a, b) => {
   }
 });
 }
-
-// function filtrarPorOrden(orden) {
-//   const datos = obtenerDatos("operaciones")
-//   return datos.filter(elem => elem.orden === orden)
-// }
 
 
 

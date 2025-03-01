@@ -29,10 +29,9 @@ const $filtroDesde = $('#filtro-desde');
 const $selectFiltroOrden = $('#select-filtro-orden');
 const $columnasCategorias = $('#columnas-categorias');
 
-
-
-
-
+const $ganancias = $('#ganancias');
+const $gastos = $('#gastos');
+const $total = $('#total');
 
 
 // Función para mostrar y ocultar filtros
@@ -141,8 +140,7 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
 
 $selectFiltroTipo.addEventListener("input", (e) => {
   const datos = funciones.obtenerDatos("operaciones")
-  // console.log(datos)
-  // console.log(e.target.value)
+
   if(e.target.value !== "all") {
     const tipoFiltrado = datos.filter(elem => elem.tipo === e.target.value)
     pintarDatos(tipoFiltrado)
@@ -204,7 +202,7 @@ function pintarDatos(array) {
         <span class="text-left font-semibold w-1/4">${operacion.descripcion}</span>
         <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${operacion.categoria}</span>
         <span class="text-center text-sm w-1/6">${operacion.fecha}</span>
-        <span class="text-center text-red-500 font-semibold w-1/6">$${operacion.monto}</span>
+        <span class="text-center text-successPrimary font-semibold w-1/6">$${operacion.monto}</span>
         <div class="flex gap-4 text-xs text-pink-500 w-1/6 justify-end">
           <button id="${operacion.id} class="hover:underline editar-boton">Editar</button>
           <button id="${operacion.id} class="hover:underline eliminar-boton">Eliminar</button>
@@ -219,8 +217,31 @@ function pintarDatos(array) {
 }
 
 
+const actualizarTotalBalance = () => {
+  const datos = funciones.obtenerDatos("operaciones");
+  console.log(datos)
+
+  const datosGanancias = funciones.filtrarPorTipo("ganancias");
+  const totalDatosGanancias = datosGanancias.reduce((acc, curr) => acc + curr.monto, 0);
+
+  const datosGastos = funciones.filtrarPorTipo("gasto");
+  const totalDatosGastos = datosGastos.reduce((acc, curr) => acc + curr.monto, 0);
+
+
+  //  El total es: GANANCIAS - GASTOS
+  const totalBalance = totalDatosGanancias - totalDatosGastos;
+
+  $ganancias.innerText = `$ ${totalDatosGanancias}`;
+  $gastos.innerText = `$ ${totalDatosGastos}`;
+  $total.innerText = `$ ${totalBalance}`; 
+};
+
+
+
 window.onload = () => {
   const datos = funciones.obtenerDatos("operaciones")
 
   pintarDatos(datos);
+
+  actualizarTotalBalance();
 }
