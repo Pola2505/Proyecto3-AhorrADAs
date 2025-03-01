@@ -190,10 +190,6 @@ $selectFiltroOrden.addEventListener("input", (e) => {
   pintarDatos(datosOrdenados);
 });
 
-
-
-
-/* Funcion que mostrara los datos en pantalla */
 function pintarDatos(array) {
 
   $operacionesCargadas.innerHTML = "";
@@ -202,10 +198,10 @@ function pintarDatos(array) {
         <span class="text-left font-semibold w-1/4">${operacion.descripcion}</span>
         <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${operacion.categoria}</span>
         <span class="text-center text-sm w-1/6">${operacion.fecha}</span>
-        <span class="text-center text-successPrimary font-semibold w-1/6">$${operacion.monto}</span>
+        <span class="text-center text-red-500 font-semibold w-1/6">$${operacion.monto}</span>
         <div class="flex gap-4 text-xs text-pink-500 w-1/6 justify-end">
-          <button id="${operacion.id} class="hover:underline editar-boton">Editar</button>
-          <button id="${operacion.id} class="hover:underline eliminar-boton">Eliminar</button>
+          <button id="${operacion.id}" class="hover:underline editar-boton">Editar</button>
+          <button id="${operacion.id}" class="hover:underline eliminar-boton">Eliminar</button>
         </div>
       </div>`
   }
@@ -215,14 +211,27 @@ function pintarDatos(array) {
   ocultarElemento([$seccionNuevaOperacion]);
 
   actualizarTotalBalance();
-
+  botonesDeEdicionOperacion();
 
 }
 
+const botonesDeEdicionOperacion = () => {
+
+  const $$arrayEditarBoton = $$('.editar-boton');
+  const $$arrayEliminarBoton = $$('.eliminar-boton');
+
+  $$arrayEliminarBoton.forEach( boton => {
+    boton.addEventListener('click', (e) => {
+      const nuevasOperaciones = funciones.eliminarOperacion(e.target.id)
+      pintarDatos(nuevasOperaciones)
+    })
+  })
+
+}
 
 const actualizarTotalBalance = () => {
   const datos = funciones.obtenerDatos("operaciones");
-  console.log(datos)
+ 
 
   const datosGanancias = funciones.filtrarPorTipo("ganancias");
   const totalDatosGanancias = datosGanancias.reduce((acc, curr) => acc + curr.monto, 0);
@@ -247,4 +256,5 @@ window.onload = () => {
   pintarDatos(datos);
 
   actualizarTotalBalance();
+  botonesDeEdicionOperacion();
 }

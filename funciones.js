@@ -57,6 +57,15 @@ return datos.sort((a, b) => {
 });
 }
 
+const eliminarOperacion = (idOperacion) => {
+  const datos = obtenerDatos("operaciones");
+  const operacionEliminada = datos.filter(operacion => operacion.id !== idOperacion)
+
+  guardarDatos("operaciones", operacionEliminada)
+
+  return operacionEliminada;
+}
+
 
 
 
@@ -67,5 +76,6 @@ export default {
   filtrarPorTipo,
   filtrarPorCategoria,
   filtrarPorFecha,
-  ordenarDatos
+  ordenarDatos,
+  eliminarOperacion
 }
