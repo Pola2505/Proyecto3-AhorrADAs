@@ -28,6 +28,7 @@ const $selectFiltroCategorias = $('#select-filtro-categorias');
 const $filtroDesde = $('#filtro-desde');
 const $selectFiltroOrden = $('#select-filtro-orden');
 const $columnasCategorias = $('#columnas-categorias');
+const $seccionEditarOperacion = $('#seccion-editar-operacion');
 
 const $ganancias = $('#ganancias');
 const $gastos = $('#gastos');
@@ -225,6 +226,14 @@ const botonesDeEdicionOperacion = () => {
       const nuevasOperaciones = funciones.eliminarOperacion(e.target.id)
       pintarDatos(nuevasOperaciones)
     })
+  });
+
+  $$arrayEditarBoton.forEach((boton) => {
+    boton.addEventListener('click', () => {
+      mostrarElemento([$seccionEditarOperacion]);
+      ocultarElemento([$balance]);
+    })
+
   })
 
 }
