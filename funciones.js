@@ -13,6 +13,7 @@ function agregarOperacion(objetoNuevaOperacion) {
   guardarDatos("operaciones", [...datos, objetoNuevaOperacion])
 }
 
+
 function filtrarPorTipo(tipo) {
   const datos = obtenerDatos("operaciones");
   return datos.filter(elem => elem.tipo === tipo);
@@ -67,5 +68,5 @@ export default {
   filtrarPorTipo,
   filtrarPorCategoria,
   filtrarPorFecha,
-  ordenarDatos
+  ordenarDatos,
 }

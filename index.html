@@ -392,9 +392,42 @@
         </section>
 
         <section id="reportes-container"
-            class="hidden flex flex-col justify-start h-screen mt-20 md:mx-10 lg:mx-20 xl:mx-64">
-            <div class="bg-bgSecondary rounded-lg p-8 shadow-2xl mx-12">
-                <h2 class="text-3xl font-bold text-textPrimary mb-10 tracking-wide xl:text-[40px]">Reportes</h2>
+        class="hidden flex flex-col justify-start h-screen mt-20 md:mx-10 lg:mx-20 xl:mx-64">
+            <div id="reportes-resumen" class="hidden bg-bgSecondary rounded-lg p-8 shadow-2xl mx-12">
+
+                <h1 class="text-3xl font-bold text-textPrimary xl:text-[40px] mb-6 ">Reportes</h1>
+
+
+                <h2 class="text-2xl p-6 font-sans text-textPrimary font-semibold">Resumen</h1>
+                    <p class="font-medium  p-6 text-left">Categoría con mayor ganancia:</p>
+                    <p class="font-medium  p-6 text-left">Categoría con mayor gasto:</p>
+                    <p class="font-medium  p-6 text-left">Mes con mayor ganancia:</p>
+                    <p class="font-medium  p-6 text-left">Mes con mayor gasto:</p>
+
+
+
+
+
+
+                <h2 class="text-2xl p-6 font-sans text-textPrimary font-semibold">Totales por categoría</h1>
+                    <div id="columnas-categorias" class="flex flex-row justify-between pb-2 px-5 text-textPrimary">
+                        <p class="font-medium text-left">Categoría</p>
+                        <p class="font-medium text-right">Ganancias</p>
+                        <p class="font-medium text-right">Gastos</p>
+                        <p class="font-medium text-right">Balance</p>
+                    </div>
+
+                <h2 class="text-2xl p-6 font-sans text-textPrimary font-semibold">Totales por mes </h1>
+                    <div id="columnas-categorias" class="flex flex-row justify-between pb-2 px-5 text-textPrimary">
+                        <p class="font-medium text-left">Mes</p>
+                        <p class="font-medium text-right">Ganancias</p>
+                        <p class="font-medium text-right">Gastos</p>
+                        <p class="font-medium text-right">Balance</p>
+                    </div>
+                </div>
+
+
+                <div id="imagen-reportes" class="hidden" >
                 <img src="./galeria/reportes.svg" alt="reportes" class="w-96 mx-auto">
                 <h3 class="text-2xl text-textPrimary mt-4 mb-2 text-center">Operaciones insuficientes</h3>
                 <p class="text-1xl text-textPrimary mb-6 text-center">Prueba agregando mas operaciones</p>

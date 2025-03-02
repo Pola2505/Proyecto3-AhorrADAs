@@ -33,6 +33,9 @@ const $ganancias = $('#ganancias');
 const $gastos = $('#gastos');
 const $total = $('#total');
 
+const $resumenReportes = $("#reportes-resumen");  // Contenedor del resumen
+const $imagenReportes = $("#imagen-reportes");  // Imagen que debe desaparecer
+
 
 // Función para mostrar y ocultar filtros
 
@@ -130,6 +133,7 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
 
   const datos = funciones.obtenerDatos("operaciones")
   pintarDatos(datos)
+  
 })
 
 
@@ -215,6 +219,7 @@ function pintarDatos(array) {
   ocultarElemento([$seccionNuevaOperacion]);
 
   actualizarTotalBalance();
+  actualizarReportes();
 
 
 }
@@ -240,6 +245,20 @@ const actualizarTotalBalance = () => {
 };
 
 
+const actualizarReportes = () => {
+  const datos = funciones.obtenerDatos("operaciones");
+
+  if (datos.length > 0) {
+    mostrarElemento([$resumenReportes]); // Muestra el resumen
+    ocultarElemento([$imagenReportes]);  // Oculta la imagen
+  } else {
+    mostrarElemento([$imagenReportes]);  // Muestra la imagen
+    ocultarElemento([$resumenReportes]); // Oculta el resumen
+  }
+};
+
+
+
 
 window.onload = () => {
   const datos = funciones.obtenerDatos("operaciones")
@@ -247,4 +266,5 @@ window.onload = () => {
   pintarDatos(datos);
 
   actualizarTotalBalance();
+  actualizarReportes();
 }
