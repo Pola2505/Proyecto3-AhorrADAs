@@ -35,11 +35,17 @@ const $ganancias = $('#ganancias');
 const $gastos = $('#gastos');
 const $total = $('#total');
 
+const $resumenReportes = $("#reportes-resumen");  // Contenedor del resumen
+const $imagenReportes = $("#imagen-reportes");  // Imagen que debe desaparecer
+
 const $editOperacionInput = $('#edit-operacion-input');
 const $editOperacionMonto = $('#edit-operacion-monto');
 const $editOperacionTipo  = $('#edit-operacion-tipo');
 const $editFiltroCategorias = $('#edit-filtro-categorias');
 const $editFiltroDesde = $('#edit-filtro-desde');
+
+const $categoriasReporte = $('#categorias-reporte');
+
 
 
 // Función para mostrar y ocultar filtros
@@ -136,6 +142,7 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
 
   const datos = funciones.obtenerDatos("operaciones")
   pintarDatos(datos)
+  
 })
 
 
@@ -204,7 +211,7 @@ function pintarDatos(array) {
         <span class="text-left font-semibold w-1/4">${operacion.descripcion}</span>
         <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${operacion.categoria}</span>
         <span class="text-center text-sm w-1/6">${operacion.fecha}</span>
-        <span class="text-center text-red-500 font-semibold w-1/6">$${operacion.monto}</span>
+        <span class="text-center text-red-500 font-semibold w-1/6">$${operacion.monto}</span> 
         <div class="flex gap-4 text-xs text-pink-500 w-1/6 justify-end">
           <button id="${operacion.id}" class="hover:underline editar-boton">Editar</button>
           <button id="${operacion.id}" class="hover:underline eliminar-boton">Eliminar</button>
@@ -217,8 +224,8 @@ function pintarDatos(array) {
   ocultarElemento([$seccionNuevaOperacion]);
 
   actualizarTotalBalance();
+  actualizarReportes();
   botonesDeEdicionOperacion();
-
 }
 
 const botonesDeEdicionOperacion = () => {
@@ -300,6 +307,38 @@ const actualizarTotalBalance = () => {
 };
 
 
+const actualizarReportes = () => {
+  const datos = funciones.obtenerDatos("operaciones");
+
+  if (datos.length > 0) {
+    mostrarElemento([$resumenReportes]); // Muestra el resumen
+    ocultarElemento([$imagenReportes]);  // Oculta la imagen
+  } else {
+    mostrarElemento([$imagenReportes]);  // Muestra la imagen
+    ocultarElemento([$resumenReportes]); // Oculta el resumen
+  }
+};
+
+const totalesCategoriasReporte = (array) => {
+  const datos = funciones.obtenerDatos("operaciones");
+  console.log(datos)
+  
+  for (const operacion of array) {
+    $categoriasReporte.innerHTML += `<div class="flex flex-col justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
+      <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${operacion.categoria}</span>
+
+    </div>`
+  };
+}
+
+
+
+
+
+
+
+
+
 
 window.onload = () => {
   const datos = funciones.obtenerDatos("operaciones")
@@ -307,5 +346,7 @@ window.onload = () => {
   pintarDatos(datos);
 
   actualizarTotalBalance();
+  actualizarReportes();
   botonesDeEdicionOperacion();
+  totalesCategoriasReporte(datos);
 }
