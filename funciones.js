@@ -77,6 +77,6 @@ export default {
   filtrarPorTipo,
   filtrarPorCategoria,
   filtrarPorFecha,
-  ordenarDatos,,
+  ordenarDatos,
   eliminarOperacion
 }
