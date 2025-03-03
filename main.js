@@ -44,7 +44,14 @@ const $editOperacionTipo  = $('#edit-operacion-tipo');
 const $editFiltroCategorias = $('#edit-filtro-categorias');
 const $editFiltroDesde = $('#edit-filtro-desde');
 
+const $inputCategoria = $('#categoria-input');
+const $botonAgregarCategoria = $('#boton-agregar-categoria');
+const $listaCategorias = $('#lista-categorias'); // Contenedor donde se mostrarán las categorías
+
 const $categoriasReporte = $('#categorias-reporte');
+
+
+
 
 
 
@@ -203,6 +210,9 @@ $selectFiltroOrden.addEventListener("input", (e) => {
   pintarDatos(datosOrdenados);
 });
 
+
+////////////// SECCIÓN EDITAR Y ELIMINAR OPERACIONES //////////////////////7
+
 function pintarDatos(array) {
 
   $operacionesCargadas.innerHTML = "";
@@ -226,7 +236,11 @@ function pintarDatos(array) {
   actualizarTotalBalance();
   actualizarReportes();
   botonesDeEdicionOperacion();
+
 }
+
+
+//////////// EDITAR OPERACIÓN ///////////////////
 
 const botonesDeEdicionOperacion = () => {
 
@@ -287,6 +301,11 @@ $editarNuevaOperacion.addEventListener("submit", (event) => {
 
 });
 
+
+
+
+//////////// SECCIÓN BALANCE /////////////////7
+
 const actualizarTotalBalance = () => {
   const datos = funciones.obtenerDatos("operaciones");
  
@@ -306,6 +325,11 @@ const actualizarTotalBalance = () => {
   $total.innerText = `$ ${totalBalance}`; 
 };
 
+
+
+  
+
+////////////// SECCIÓN REPORTES //////////////////
 
 const actualizarReportes = () => {
   const datos = funciones.obtenerDatos("operaciones");
@@ -335,6 +359,87 @@ const totalesCategoriasReporte = (array) => {
 
 
 
+/////////////// PROBANDO SECCIÓN CATEGORIAS /////////////
+
+const categorias = []; // Array para almacenar las categorías
+
+$botonAgregarCategoria.addEventListener('click', () => {
+  const nombreCategoria = $inputCategoria.value.trim();
+
+  if (nombreCategoria !== '') {
+    categorias.push({ nombre: nombreCategoria }); // Agrega la nueva categoría al array
+    pintarCategorias();
+    $inputCategoria.value = ''; // Limpia el input después de agregar
+  }
+});
+
+
+// Función para pintar las categorías en el HTML
+function pintarCategorias() {
+  $listaCategorias.innerHTML = ''; // Limpia la lista antes de pintar nuevamente
+
+  for (const categoria of categorias) {
+    $listaCategorias.innerHTML += `
+      <div class="flex justify-between py-3">
+        <span class="bg-violet-200 text-violet-600 text-xs p-1 rounded">${categoria.nombre}</span>
+      </div>`;
+  }
+}
+
+
+
+///////////// PROBANDO ELIMINAR Y EDITAR CATEGORÍA ///////////////
+
+
+  const $$arrayButtonsDelete = $$(".button-delete")
+  const $$arrayButtonsEdit = $$(".button-edit")
+
+  $$arrayButtonsDelete.forEach(button => {
+    button.addEventListener("click", (e) => {
+      console.log(HOLAAA)
+//       const nuevoArray = funciones.quitarVenta(e.target.id)
+//       pintarDatos(nuevoArray)
+//     })
+//   })
+
+//   $$arrayButtonsEdit.forEach(button => {
+//     button.addEventListener("click", (e) => {
+//       hideElement([$sectionViewHome, $sectionViewReporte, $("#form-create")])
+//       showElement([$sectionViewVenta, $formEdit])
+
+//       const datos = funciones.obtenerDatos("ventas")
+//       const ventaBuscada = datos.find(elem => elem.id === e.target.id)
+
+//       $selectEditType.value = ventaBuscada.type
+//       $inputEditValor.value = ventaBuscada.value
+//       $inputEditFecha.value = ventaBuscada.date
+//       $inputEditCantidad.value = ventaBuscada.quantity
+
+//       $formEdit.id = ventaBuscada.id
+     })
+   })
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -349,4 +454,7 @@ window.onload = () => {
   actualizarReportes();
   botonesDeEdicionOperacion();
   totalesCategoriasReporte(datos);
+
+  pintarCategorias()
+
 }

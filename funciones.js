@@ -13,6 +13,12 @@ function agregarOperacion(objetoNuevaOperacion) {
   guardarDatos("operaciones", [...datos, objetoNuevaOperacion])
 }
 
+// function agregarCategoria(objetoNuevaCategoria) {
+//   const datos = obtenerDatos("operaciones")
+//   guardarDatos("operaciones", [...datos, objetoNuevaCategoria])
+// }
+
+
 
 function filtrarPorTipo(tipo) {
   const datos = obtenerDatos("operaciones");
@@ -80,6 +86,21 @@ function editarOperacion(idOperacion, nuevosDatos) {
 
 
 
+////////////////// PROBANDO FUNCION DE ELIMINAR CATEGORIA /////////////////////
+
+function eliminarCategoria(idCategoria) {
+  const datos = obtenerDatos("operaciones");
+  const categoriaEliminada = datos.filter(categoria => categoria.id !== idCategoria)
+
+  guardarDatos("operaciones", categoriaEliminada)
+
+  return categoriaEliminada;
+}
+
+
+
+
+
 
 export default {
   obtenerDatos,
@@ -90,5 +111,5 @@ export default {
   filtrarPorFecha,
   ordenarDatos,
   eliminarOperacion,
-  editarOperacion
+  editarOperacion,
 }
