@@ -66,6 +66,17 @@ const eliminarOperacion = (idOperacion) => {
   return operacionEliminada;
 }
 
+function editarOperacion(idOperacion, nuevosDatos) {
+  const datos = obtenerDatos("operaciones")
+  const indiceBuscado = datos.findIndex((operacion) => operacion.id == idOperacion)
+
+  datos.splice(indiceBuscado, 1, {...nuevosDatos, id: idOperacion});
+
+  guardarDatos("operaciones", datos)
+
+  return datos
+}
+
 
 
 
@@ -77,5 +88,6 @@ export default {
   filtrarPorCategoria,
   filtrarPorFecha,
   ordenarDatos,
-  eliminarOperacion
+  eliminarOperacion,
+  editarOperacion
 }

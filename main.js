@@ -13,6 +13,7 @@ const $seccionFiltros = $('#seccion-filtros')
 const $seccionOperaciones = $('#seccion-operaciones')
 const $botonNuevaOperacion = $('#boton-nueva-operacion')
 const $seccionNuevaOperacion = $('#seccion-nueva-operacion')
+const $editarNuevaOperacion= $('#editar-nueva-operacion')
 
 const $menu = $('#menu');
 const $categorias = $('#categorias-container');
@@ -34,6 +35,12 @@ const $ganancias = $('#ganancias');
 const $gastos = $('#gastos');
 const $total = $('#total');
 
+const $editOperacionInput = $('#edit-operacion-input');
+const $editOperacionMonto = $('#edit-operacion-monto');
+const $editOperacionTipo  = $('#edit-operacion-tipo');
+const $editFiltroCategorias = $('#edit-filtro-categorias');
+const $editFiltroDesde = $('#edit-filtro-desde');
+
 
 // Función para mostrar y ocultar filtros
 
@@ -52,8 +59,6 @@ const $total = $('#total');
 // Funciones para buscar los elementos del DOM
 
 const $$ = (element) => document.querySelectorAll(element);
-
-// Elementos del DOM
 
 
 
@@ -229,14 +234,51 @@ const botonesDeEdicionOperacion = () => {
   });
 
   $$arrayEditarBoton.forEach((boton) => {
-    boton.addEventListener('click', () => {
+    boton.addEventListener('click', (e) => {
       mostrarElemento([$seccionEditarOperacion]);
       ocultarElemento([$balance]);
+
+      const datos = funciones.obtenerDatos("operaciones");
+      const operacionParaEditar = datos.find(elem => elem.id === e.target.id);
+
+      $editOperacionInput.value = operacionParaEditar.descripcion;
+      $editOperacionMonto.value = operacionParaEditar.monto;
+      $editOperacionTipo.value = operacionParaEditar.tipo;
+      $editFiltroCategorias.value = operacionParaEditar.categoria;
+      $editFiltroDesde.value = operacionParaEditar.fecha;
+
+      $editarNuevaOperacion.id = operacionParaEditar.id;
     })
 
   })
 
 }
+
+$editarNuevaOperacion.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const datos = funciones.obtenerDatos("operaciones");
+  const operacionParaEditar = datos.find(elem => elem.id === event.target.id);
+
+  if (!operacionParaEditar) {
+    console.error("No se encontró la operación a editar");
+    return;
+  }
+
+  const nuevosDatos = {  
+    descripcion: event.target[0].value,
+    monto: Number(event.target[1].value),
+    tipo: event.target[2].value,
+    categoria: event.target[3].value,
+    fecha: dayjs(event.target[4].value).format("YYYY-MM-DD")
+  };
+
+  const datosModificados = funciones.editarOperacion(operacionParaEditar.id, nuevosDatos);
+
+  pintarDatos(datosModificados);
+  ocultarElemento([$seccionEditarOperacion]);
+
+});
 
 const actualizarTotalBalance = () => {
   const datos = funciones.obtenerDatos("operaciones");
