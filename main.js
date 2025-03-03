@@ -354,9 +354,9 @@ function mostrarResumen(datos) {
   $categoriasReporte.innerHTML = Object.entries(resumen).map(([categoria, datos]) => `
   <div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1 categoria-box">
     <span class="categoria-nombre text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1">${categoria}</span>
-    <span class="categoria-dato text-green-500 font-semibold">$${datos.ganancias}</span>
-    <span class="categoria-dato text-red-500 font-semibold">$ -${datos.gasto}</span>
-    <span class="categoria-dato font-semibold">$${datos.balance}</span>
+    <span class="text-[9px] sm:text-sm md:text-md lg:text-lg categoria-dato text-green-500 font-semibold">$${datos.ganancias}</span>
+    <span class="text-[9px] sm:text-sm md:text-md lg:text-lg categoria-dato text-red-500 font-semibold">$ -${datos.gasto}</span>
+    <span class="text-[9px] sm:text-sm md:text-md lg:text-lg categoria-dato font-semibold">$${datos.balance}</span>
   </div>
 `).join("");
 
@@ -368,7 +368,7 @@ function calcularResumenPorMes(datos) {
   const resumenPorMes = {};
 
   datos.forEach(({ fecha, monto, tipo }) => {
-    const mes = fecha.slice(0, 7); // Extraemos "YYYY-MM" (ejemplo: "2024-03")
+    const mes = fecha.slice(0, 7);
 
     if (!resumenPorMes[mes]) {
       resumenPorMes[mes] = { ganancias: 0, gasto: 0, balance: 0 };
@@ -392,10 +392,10 @@ function mostrarResumenPorMes(datos) {
   
   $totalesMesReporte.innerHTML = Object.entries(resumen).map(([mes, datos]) => `
     <div class="mes-box flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
-      <span class="mes-titulo">${mes}</span>
-      <span class="mes-dato text-green-500 font-semibold">$${datos.ganancias}</span>
-      <span class="mes-dato text-red-500 font-semibold">$ -${datos.gasto}</span>
-      <span class="mes-dato font-semibold">$${datos.balance}</span>
+      <span class="text-[9px] sm:text-sm md:text-md lg:text-lg mes-titulo">${mes}</span>
+      <span class="text-[9px] sm:text-sm md:text-md lg:text-lg mes-dato text-green-500 font-semibold">$${datos.ganancias}</span>
+      <span class="text-[9px] sm:text-sm md:text-md lg:text-lg mes-dato text-red-500 font-semibold">$ -${datos.gasto}</span>
+      <span class="text-[9px] sm:text-sm md:text-md lg:text-lg mes-dato font-semibold">$${datos.balance}</span>
     </div>
   `).join("");
 }
@@ -424,7 +424,7 @@ function mostrarCategoriaMayorGanancia(datos) {
   $categoriaMayorGanancia.innerHTML =
     `<div class="ganancia-box">
         <span class="ganancia-dato text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 mx-1 md:mx-5 lg:mx-10">${resultado.categoria}</span>
-        <span class="ganancia-dato text-green-500 font-semibold">$  ${resultado.ganancias}</span>
+        <span class="text-[9px] sm:text-sm md:text-md lg:text-lg ganancia-dato text-green-500 font-semibold">$  ${resultado.ganancias}</span>
       </div>`
     ;
 }
@@ -453,7 +453,7 @@ function mostrarCategoriaMayorGasto(datos) {
   $categoriaMayorGasto.innerHTML =
     `<div class="ganancia-box">
         <span class="ganancia-dato text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1">${resultado.categoria}</span>
-        <span class="ganancia-dato text-red-500 font-semibold">$ -${resultado.gasto}</span>
+        <span class="text-[9px] sm:text-sm md:text-md lg:text-lg ganancia-dato text-red-500 font-semibold">$ -${resultado.gasto}</span>
       </div>`
     ;
 }
@@ -482,8 +482,8 @@ function mostrarMesMayorGanancia(datos) {
 
   $mesMayorGanancia.innerHTML =
     `<div class="ganancia-box">
-        <span class="text-center text-xs p-1 m-1">${resultado.mes}</span>
-        <span class="ganancia-dato text-green-500 font-semibold">$  ${resultado.ganancias}</span>
+        <span class="text-center text-[8px] sm:text-sm md:text-md lg:text-lg p-1 m-1">${resultado.mes}</span>
+        <span class="text-[8px] sm:text-sm md:text-md lg:text-lg ganancia-dato text-green-500 font-semibold">$  ${resultado.ganancias}</span>
       </div>`
     ;
 }
@@ -512,8 +512,8 @@ function mostrarMesMayorGasto(datos) {
 
   $mesMayorGasto.innerHTML =
     `<div class="ganancia-box">
-        <span class="text-center text-xs p-1 m-1">${resultado.mes}</span>
-        <span class="ganancia-dato text-red-500 font-semibold">$ -${resultado.gasto}</span>
+        <span class="text-center text-[9px] sm:text-sm md:text-md lg:text-lg p-1 m-1">${resultado.mes}</span>
+        <span class="text-[9px] sm:text-sm md:text-md lg:text-lg ganancia-dato text-red-500 font-semibold">$ -${resultado.gasto}</span>
       </div>`
     ;
 }
