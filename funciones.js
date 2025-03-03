@@ -13,6 +13,7 @@ function agregarOperacion(objetoNuevaOperacion) {
   guardarDatos("operaciones", [...datos, objetoNuevaOperacion])
 }
 
+
 function filtrarPorTipo(tipo) {
   const datos = obtenerDatos("operaciones");
   return datos.filter(elem => elem.tipo === tipo);
@@ -57,6 +58,26 @@ return datos.sort((a, b) => {
 });
 }
 
+const eliminarOperacion = (idOperacion) => {
+  const datos = obtenerDatos("operaciones");
+  const operacionEliminada = datos.filter(operacion => operacion.id !== idOperacion)
+
+  guardarDatos("operaciones", operacionEliminada)
+
+  return operacionEliminada;
+}
+
+function editarOperacion(idOperacion, nuevosDatos) {
+  const datos = obtenerDatos("operaciones")
+  const indiceBuscado = datos.findIndex((operacion) => operacion.id == idOperacion)
+
+  datos.splice(indiceBuscado, 1, {...nuevosDatos, id: idOperacion});
+
+  guardarDatos("operaciones", datos)
+
+  return datos
+}
+
 
 
 
@@ -67,5 +88,7 @@ export default {
   filtrarPorTipo,
   filtrarPorCategoria,
   filtrarPorFecha,
-  ordenarDatos
+  ordenarDatos,
+  eliminarOperacion,
+  editarOperacion
 }

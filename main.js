@@ -13,6 +13,7 @@ const $seccionFiltros = $('#seccion-filtros')
 const $seccionOperaciones = $('#seccion-operaciones')
 const $botonNuevaOperacion = $('#boton-nueva-operacion')
 const $seccionNuevaOperacion = $('#seccion-nueva-operacion')
+const $editarNuevaOperacion= $('#editar-nueva-operacion')
 
 const $menu = $('#menu');
 const $categorias = $('#categorias-container');
@@ -28,10 +29,23 @@ const $selectFiltroCategorias = $('#select-filtro-categorias');
 const $filtroDesde = $('#filtro-desde');
 const $selectFiltroOrden = $('#select-filtro-orden');
 const $columnasCategorias = $('#columnas-categorias');
+const $seccionEditarOperacion = $('#seccion-editar-operacion');
 
 const $ganancias = $('#ganancias');
 const $gastos = $('#gastos');
 const $total = $('#total');
+
+const $resumenReportes = $("#reportes-resumen");  // Contenedor del resumen
+const $imagenReportes = $("#imagen-reportes");  // Imagen que debe desaparecer
+
+const $editOperacionInput = $('#edit-operacion-input');
+const $editOperacionMonto = $('#edit-operacion-monto');
+const $editOperacionTipo  = $('#edit-operacion-tipo');
+const $editFiltroCategorias = $('#edit-filtro-categorias');
+const $editFiltroDesde = $('#edit-filtro-desde');
+
+const $categoriasReporte = $('#categorias-reporte');
+
 
 
 // Función para mostrar y ocultar filtros
@@ -51,8 +65,6 @@ const $total = $('#total');
 // Funciones para buscar los elementos del DOM
 
 const $$ = (element) => document.querySelectorAll(element);
-
-// Elementos del DOM
 
 
 
@@ -130,6 +142,7 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
 
   const datos = funciones.obtenerDatos("operaciones")
   pintarDatos(datos)
+  
 })
 
 
@@ -190,10 +203,6 @@ $selectFiltroOrden.addEventListener("input", (e) => {
   pintarDatos(datosOrdenados);
 });
 
-
-
-
-/* Funcion que mostrara los datos en pantalla */
 function pintarDatos(array) {
 
   $operacionesCargadas.innerHTML = "";
@@ -202,10 +211,10 @@ function pintarDatos(array) {
         <span class="text-left font-semibold w-1/4">${operacion.descripcion}</span>
         <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${operacion.categoria}</span>
         <span class="text-center text-sm w-1/6">${operacion.fecha}</span>
-        <span class="text-center text-successPrimary font-semibold w-1/6">$${operacion.monto}</span>
+        <span class="text-center text-red-500 font-semibold w-1/6">$${operacion.monto}</span> 
         <div class="flex gap-4 text-xs text-pink-500 w-1/6 justify-end">
-          <button id="${operacion.id} class="hover:underline editar-boton">Editar</button>
-          <button id="${operacion.id} class="hover:underline eliminar-boton">Eliminar</button>
+          <button id="${operacion.id}" class="hover:underline editar-boton">Editar</button>
+          <button id="${operacion.id}" class="hover:underline eliminar-boton">Eliminar</button>
         </div>
       </div>`
   }
@@ -215,14 +224,72 @@ function pintarDatos(array) {
   ocultarElemento([$seccionNuevaOperacion]);
 
   actualizarTotalBalance();
+  actualizarReportes();
+  botonesDeEdicionOperacion();
+}
 
+const botonesDeEdicionOperacion = () => {
+
+  const $$arrayEditarBoton = $$('.editar-boton');
+  const $$arrayEliminarBoton = $$('.eliminar-boton');
+
+  $$arrayEliminarBoton.forEach( boton => {
+    boton.addEventListener('click', (e) => {
+      const nuevasOperaciones = funciones.eliminarOperacion(e.target.id)
+      pintarDatos(nuevasOperaciones)
+    })
+  });
+
+  $$arrayEditarBoton.forEach((boton) => {
+    boton.addEventListener('click', (e) => {
+      mostrarElemento([$seccionEditarOperacion]);
+      ocultarElemento([$balance]);
+
+      const datos = funciones.obtenerDatos("operaciones");
+      const operacionParaEditar = datos.find(elem => elem.id === e.target.id);
+
+      $editOperacionInput.value = operacionParaEditar.descripcion;
+      $editOperacionMonto.value = operacionParaEditar.monto;
+      $editOperacionTipo.value = operacionParaEditar.tipo;
+      $editFiltroCategorias.value = operacionParaEditar.categoria;
+      $editFiltroDesde.value = operacionParaEditar.fecha;
+
+      $editarNuevaOperacion.id = operacionParaEditar.id;
+    })
+
+  })
 
 }
 
+$editarNuevaOperacion.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const datos = funciones.obtenerDatos("operaciones");
+  const operacionParaEditar = datos.find(elem => elem.id === event.target.id);
+
+  if (!operacionParaEditar) {
+    console.error("No se encontró la operación a editar");
+    return;
+  }
+
+  const nuevosDatos = {  
+    descripcion: event.target[0].value,
+    monto: Number(event.target[1].value),
+    tipo: event.target[2].value,
+    categoria: event.target[3].value,
+    fecha: dayjs(event.target[4].value).format("YYYY-MM-DD")
+  };
+
+  const datosModificados = funciones.editarOperacion(operacionParaEditar.id, nuevosDatos);
+
+  pintarDatos(datosModificados);
+  ocultarElemento([$seccionEditarOperacion]);
+
+});
 
 const actualizarTotalBalance = () => {
   const datos = funciones.obtenerDatos("operaciones");
-  console.log(datos)
+ 
 
   const datosGanancias = funciones.filtrarPorTipo("ganancias");
   const totalDatosGanancias = datosGanancias.reduce((acc, curr) => acc + curr.monto, 0);
@@ -240,6 +307,38 @@ const actualizarTotalBalance = () => {
 };
 
 
+const actualizarReportes = () => {
+  const datos = funciones.obtenerDatos("operaciones");
+
+  if (datos.length > 0) {
+    mostrarElemento([$resumenReportes]); // Muestra el resumen
+    ocultarElemento([$imagenReportes]);  // Oculta la imagen
+  } else {
+    mostrarElemento([$imagenReportes]);  // Muestra la imagen
+    ocultarElemento([$resumenReportes]); // Oculta el resumen
+  }
+};
+
+const totalesCategoriasReporte = (array) => {
+  const datos = funciones.obtenerDatos("operaciones");
+  console.log(datos)
+  
+  for (const operacion of array) {
+    $categoriasReporte.innerHTML += `<div class="flex flex-col justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
+      <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${operacion.categoria}</span>
+
+    </div>`
+  };
+}
+
+
+
+
+
+
+
+
+
 
 window.onload = () => {
   const datos = funciones.obtenerDatos("operaciones")
@@ -247,4 +346,7 @@ window.onload = () => {
   pintarDatos(datos);
 
   actualizarTotalBalance();
+  actualizarReportes();
+  botonesDeEdicionOperacion();
+  totalesCategoriasReporte(datos);
 }
