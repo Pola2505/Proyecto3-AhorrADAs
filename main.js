@@ -45,6 +45,11 @@ const $editFiltroCategorias = $('#edit-filtro-categorias');
 const $editFiltroDesde = $('#edit-filtro-desde');
 
 const $categoriasReporte = $('#categorias-reporte');
+const $totalesMesReporte = $('#totales-mes-reporte');
+const $categoriaMayorGanancia = $('#categoria-mayor-ganancia');
+const $categoriaMayorGasto = $('#categoria-mayor-gasto');
+const $mesMayorGanancia = $('#mes-mayor-ganancia');
+const $mesMayorGasto = $('#mes-mayor-gasto');
 
 
 
@@ -319,26 +324,199 @@ const actualizarReportes = () => {
   }
 };
 
-const totalesCategoriasReporte = (array) => {
-  const datos = funciones.obtenerDatos("operaciones");
-  console.log(datos)
-  
-  for (const operacion of array) {
-    $categoriasReporte.innerHTML += `<div class="flex flex-col justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
-      <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${operacion.categoria}</span>
+// ------------------------   Funcion de calcular totales por categoria 
 
-    </div>`
-  };
+function calcularResumen(datos) {
+  const resumenPorCategoria = {};
+
+  datos.forEach(({ categoria, monto, tipo }) => {
+    if (!resumenPorCategoria[categoria]) {
+      resumenPorCategoria[categoria] = { ganancias: 0, gasto: 0, balance: 0 };
+    }
+
+    if (tipo === "ganancias") {
+      resumenPorCategoria[categoria].ganancias += monto;
+    } else {
+      resumenPorCategoria[categoria].gasto += monto;
+    }
+
+    resumenPorCategoria[categoria].balance =
+      resumenPorCategoria[categoria].ganancias - resumenPorCategoria[categoria].gasto;
+  });
+
+  return resumenPorCategoria;
 }
 
+function mostrarResumen(datos) {
+  const resumen = calcularResumen(datos);
+  
 
+  $categoriasReporte.innerHTML = Object.entries(resumen).map(([categoria, datos]) => `
+  <div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1 categoria-box">
+    <span class="categoria-nombre text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1">${categoria}</span>
+    <span class="categoria-dato text-green-500 font-semibold">$${datos.ganancias}</span>
+    <span class="categoria-dato text-red-500 font-semibold">$ -${datos.gasto}</span>
+    <span class="categoria-dato font-semibold">$${datos.balance}</span>
+  </div>
+`).join("");
 
+}
 
+// ------------------------   Funcion de calcular totales por fecha 
 
+function calcularResumenPorMes(datos) {
+  const resumenPorMes = {};
 
+  datos.forEach(({ fecha, monto, tipo }) => {
+    const mes = fecha.slice(0, 7); // Extraemos "YYYY-MM" (ejemplo: "2024-03")
 
+    if (!resumenPorMes[mes]) {
+      resumenPorMes[mes] = { ganancias: 0, gasto: 0, balance: 0 };
+    }
 
+    if (tipo === "ganancias") {
+      resumenPorMes[mes].ganancias += monto;
+    } else {
+      resumenPorMes[mes].gasto += monto;
+    }
 
+    resumenPorMes[mes].balance =
+      resumenPorMes[mes].ganancias - resumenPorMes[mes].gasto;
+  });
+
+  return resumenPorMes;
+}
+
+function mostrarResumenPorMes(datos) {
+  const resumen = calcularResumenPorMes(datos);
+  
+  $totalesMesReporte.innerHTML = Object.entries(resumen).map(([mes, datos]) => `
+    <div class="mes-box flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
+      <span class="mes-titulo">${mes}</span>
+      <span class="mes-dato text-green-500 font-semibold">$${datos.ganancias}</span>
+      <span class="mes-dato text-red-500 font-semibold">$ -${datos.gasto}</span>
+      <span class="mes-dato font-semibold">$${datos.balance}</span>
+    </div>
+  `).join("");
+}
+
+// ------------------------------- Funcion de categoria de mayor ganancia 
+
+function categoriaMayorGanancia(datos) {
+  const gananciasPorCategoria = datos
+    .filter(op => op.tipo === "ganancias") // Filtramos solo ingresos
+    .reduce((acc, { categoria, monto }) => {
+      acc[categoria] = (acc[categoria] || 0) + monto;
+      return acc;
+    }, {});
+
+ 
+  return Object.entries(gananciasPorCategoria)
+    .reduce((max, [categoria, ganancias]) => 
+      ganancias > max.ganancias ? { categoria, ganancias } : max, 
+      { categoria: null, ganancias: 0 }
+    );
+}
+
+function mostrarCategoriaMayorGanancia(datos) {
+  const resultado = categoriaMayorGanancia(datos);
+
+  $categoriaMayorGanancia.innerHTML =
+    `<div class="ganancia-box">
+        <span class="ganancia-dato text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 mx-1 md:mx-5 lg:mx-10">${resultado.categoria}</span>
+        <span class="ganancia-dato text-green-500 font-semibold">$  ${resultado.ganancias}</span>
+      </div>`
+    ;
+}
+
+// ---------------------------- Funcion de categoria de mayor gasto
+
+function categoriaMayorGasto(datos) {
+  const gastosPorCategoria = datos
+    .filter(op => op.tipo === "gasto")
+    .reduce((acc, { categoria, monto }) => {
+      acc[categoria] = (acc[categoria] || 0) + monto;
+      return acc;
+    }, {});
+
+ 
+  return Object.entries(gastosPorCategoria)
+    .reduce((max, [categoria, gasto]) => 
+      gasto > max.gasto ? { categoria, gasto } : max, 
+      { categoria: null, gasto: 0 }
+    );
+}
+
+function mostrarCategoriaMayorGasto(datos) {
+  const resultado = categoriaMayorGasto(datos);
+
+  $categoriaMayorGasto.innerHTML =
+    `<div class="ganancia-box">
+        <span class="ganancia-dato text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1">${resultado.categoria}</span>
+        <span class="ganancia-dato text-red-500 font-semibold">$ -${resultado.gasto}</span>
+      </div>`
+    ;
+}
+
+// ------------------------------ Funcion del mes con mayor ganancia
+
+function mesMayorGanancia(datos) {
+  const gananciasPorMes = datos
+    .filter(op => op.tipo === "ganancias") 
+    .reduce((acc, { fecha, monto }) => {
+      const mes = fecha.slice(0, 7); 
+      acc[mes] = (acc[mes] || 0) + monto;
+      return acc;
+    }, {});
+
+  
+  return Object.entries(gananciasPorMes)
+    .reduce((max, [mes, ganancias]) => 
+      ganancias > max.ganancias ? { mes, ganancias } : max, 
+      { mes: null, ganancias: 0 }
+    );
+}
+
+function mostrarMesMayorGanancia(datos) {
+  const resultado = mesMayorGanancia(datos);
+
+  $mesMayorGanancia.innerHTML =
+    `<div class="ganancia-box">
+        <span class="text-center text-xs p-1 m-1">${resultado.mes}</span>
+        <span class="ganancia-dato text-green-500 font-semibold">$  ${resultado.ganancias}</span>
+      </div>`
+    ;
+}
+
+// ------------------------------ Funcion del mes con mayor gasto
+
+function mesMayorGasto(datos) {
+  const gastoPorMes = datos
+    .filter(op => op.tipo === "gasto") 
+    .reduce((acc, { fecha, monto }) => {
+      const mes = fecha.slice(0, 7); 
+      acc[mes] = (acc[mes] || 0) + monto;
+      return acc;
+    }, {});
+
+  
+  return Object.entries(gastoPorMes)
+    .reduce((max, [mes, gasto]) => 
+      gasto > max.gasto ? { mes, gasto } : max, 
+      { mes: null, gasto: 0 }
+    );
+}
+
+function mostrarMesMayorGasto(datos) {
+  const resultado = mesMayorGasto(datos);
+
+  $mesMayorGasto.innerHTML =
+    `<div class="ganancia-box">
+        <span class="text-center text-xs p-1 m-1">${resultado.mes}</span>
+        <span class="ganancia-dato text-red-500 font-semibold">$ -${resultado.gasto}</span>
+      </div>`
+    ;
+}
 
 window.onload = () => {
   const datos = funciones.obtenerDatos("operaciones")
@@ -348,5 +526,11 @@ window.onload = () => {
   actualizarTotalBalance();
   actualizarReportes();
   botonesDeEdicionOperacion();
-  totalesCategoriasReporte(datos);
+  calcularResumen(datos)
+  mostrarResumen(datos);
+  mostrarResumenPorMes(datos);
+  mostrarCategoriaMayorGanancia(datos);
+  mostrarCategoriaMayorGasto(datos);
+  mostrarMesMayorGanancia(datos);
+  mostrarMesMayorGasto(datos);
 }
