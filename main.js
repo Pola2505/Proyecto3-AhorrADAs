@@ -23,9 +23,11 @@ const $balance = $('#balance-container');
 
 const $crearNuevaOperacion = $('#crear-nueva-operacion');
 const $operacionesCargadas = $('#operaciones-cargadas');
-
 const $selectFiltroTipo = $('#select-filtro-tipo');
+
+const $filtroCategoriasOperacion = $('#filtro-categorias');
 const $selectFiltroCategorias = $('#select-filtro-categorias');
+
 const $filtroDesde = $('#filtro-desde');
 const $selectFiltroOrden = $('#select-filtro-orden');
 const $columnasCategorias = $('#columnas-categorias');
@@ -44,12 +46,27 @@ const $editOperacionTipo = $('#edit-operacion-tipo');
 const $editFiltroCategorias = $('#edit-filtro-categorias');
 const $editFiltroDesde = $('#edit-filtro-desde');
 
+const $seccionEditarCategoria = $('#seccion-editar-categorias');
+
+
+
+
+const $crearNuevaCategoria = $('#crear-nueva-categoria');
+
+const $inputCategoria = $('#categoria-input');
+const $botonAgregarCategoria = $('#boton-agregar-categoria');
+const $listaCategorias = $('#lista-categorias'); // Contenedor donde se mostrarán las categorías
+
 const $categoriasReporte = $('#categorias-reporte');
 const $totalesMesReporte = $('#totales-mes-reporte');
 const $categoriaMayorGanancia = $('#categoria-mayor-ganancia');
 const $categoriaMayorGasto = $('#categoria-mayor-gasto');
 const $mesMayorGanancia = $('#mes-mayor-ganancia');
 const $mesMayorGasto = $('#mes-mayor-gasto');
+
+const $editarCategoria = $('#editar-categoria');
+
+
 
 
 
@@ -70,8 +87,6 @@ $botonFiltros.addEventListener("click", function () {
 // Funciones para buscar los elementos del DOM
 
 const $$ = (element) => document.querySelectorAll(element);
-
-
 
 
 // El menu mobile icono 
@@ -208,6 +223,9 @@ $selectFiltroOrden.addEventListener("input", (e) => {
   pintarDatos(datosOrdenados);
 });
 
+
+////////////// SECCIÓN PINTAR NUEVA OPERACION //////////////////////7
+
 function pintarDatos(array) {
 
   if (array.length === 0) {
@@ -249,6 +267,7 @@ function pintarDatos(array) {
   actualizarTotalBalance();
   actualizarReportes();
   botonesDeEdicionOperacion();
+
   mostrarResumen(array);
   mostrarResumenPorMes(array);
   mostrarCategoriaMayorGanancia(array);
@@ -260,6 +279,9 @@ function pintarDatos(array) {
 
 
 
+
+
+//////////// EDITAR OPERACIÓN ///////////////////
 
 const botonesDeEdicionOperacion = () => {
 
@@ -320,6 +342,11 @@ $editarNuevaOperacion.addEventListener("submit", (event) => {
 
 });
 
+
+
+
+//////////// SECCIÓN BALANCE /////////////////7
+
 const actualizarTotalBalance = () => {
   const datos = funciones.obtenerDatos("operaciones");
 
@@ -347,6 +374,11 @@ const actualizarTotalBalance = () => {
   $total.innerText = `$ ${totalBalance}`;
 };
 
+
+
+  
+
+////////////// SECCIÓN REPORTES //////////////////
 
 const actualizarReportes = () => {
   const datos = funciones.obtenerDatos("operaciones");
@@ -562,11 +594,5 @@ window.onload = () => {
   actualizarTotalBalance();
   actualizarReportes();
   botonesDeEdicionOperacion();
-  calcularResumen(datos)
-  mostrarResumen(datos);
-  mostrarResumenPorMes(datos);
-  mostrarCategoriaMayorGanancia(datos);
-  mostrarCategoriaMayorGasto(datos);
-  mostrarMesMayorGanancia(datos);
-  mostrarMesMayorGasto(datos);
+  totalesCategoriasReporte(datos);
 }

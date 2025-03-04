@@ -13,6 +13,11 @@ function agregarOperacion(objetoNuevaOperacion) {
   guardarDatos("operaciones", [...datos, objetoNuevaOperacion])
 }
 
+function agregarCategoria(objetoNuevaCategoria) {
+  const datos = obtenerDatos("categoria") || []; // Obtenemos categorías o creamos un array vacío
+  guardarDatos("categoria", [...datos, objetoNuevaCategoria]); // Guardamos las nuevas categorías
+}
+
 
 function filtrarPorTipo(tipo) {
   const datos = obtenerDatos("operaciones");
@@ -78,8 +83,27 @@ function editarOperacion(idOperacion, nuevosDatos) {
   return datos
 }
 
+ ///////// eliminar categoria
+ const eliminarCategoria = (idCategoria) => {
+   const datos = obtenerDatos("categoria") || []; // Obtenemos categorías o creamos un array vacío
+   const categoriaEliminada = datos.filter(categoria => categoria.id !== idCategoria)
 
+   guardarDatos("categoria", categoriaEliminada)
 
+   return categoriaEliminada;
+ }
+
+ ///////// editar categoria
+ function editarCategoria(idCategoria, nuevosDatos) {
+  const datos = obtenerDatos("categoria")
+  const indiceBuscado = datos.findIndex((categoria) => categoria.id == idCategoria)
+
+  datos.splice(indiceBuscado, 1, {...nuevosDatos, id: idCategoria});
+
+  guardarDatos("categoria", datos)
+
+  return datos
+}
 
 export default {
   obtenerDatos,
@@ -90,5 +114,8 @@ export default {
   filtrarPorFecha,
   ordenarDatos,
   eliminarOperacion,
-  editarOperacion
+  editarOperacion,
+  agregarCategoria,
+  eliminarCategoria,
+  editarCategoria
 }
