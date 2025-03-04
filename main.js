@@ -422,8 +422,8 @@ function mostrarCategoriaMayorGanancia(datos) {
   const resultado = categoriaMayorGanancia(datos);
 
   $categoriaMayorGanancia.innerHTML =
-    `<div class="ganancia-box">
-        <span class="ganancia-dato text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 mx-1 md:mx-5 lg:mx-10">${resultado.categoria}</span>
+    `<div class="ganancia-box flex justify-between md:w-48 flex-col md:flex-row items-center">
+        <span class="ganancia-dato text-center bg-violet-200 text-violet-600 text-xs p-1 rounded">${resultado.categoria}</span>
         <span class="text-[9px] sm:text-sm md:text-md lg:text-lg ganancia-dato text-green-500 font-semibold">$  ${resultado.ganancias}</span>
       </div>`
     ;
@@ -451,8 +451,8 @@ function mostrarCategoriaMayorGasto(datos) {
   const resultado = categoriaMayorGasto(datos);
 
   $categoriaMayorGasto.innerHTML =
-    `<div class="ganancia-box">
-        <span class="ganancia-dato text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1">${resultado.categoria}</span>
+    `<div class="ganancia-box flex flex-col md:flex-row justify-between md:w-48 items-center">
+        <span class="ganancia-dato text-center bg-violet-200 text-violet-600 text-xs p-1 rounded">${resultado.categoria}</span>
         <span class="text-[9px] sm:text-sm md:text-md lg:text-lg ganancia-dato text-red-500 font-semibold">$ -${resultado.gasto}</span>
       </div>`
     ;
@@ -481,8 +481,8 @@ function mostrarMesMayorGanancia(datos) {
   const resultado = mesMayorGanancia(datos);
 
   $mesMayorGanancia.innerHTML =
-    `<div class="ganancia-box">
-        <span class="text-center text-[8px] sm:text-sm md:text-md lg:text-lg p-1 m-1">${resultado.mes}</span>
+    `<div class="ganancia-box flex flex-col md:flex-row justify-between md:w-48 items-center">
+        <span class="text-center text-[8px] sm:text-sm md:text-md lg:text-lg">${resultado.mes}</span>
         <span class="text-[8px] sm:text-sm md:text-md lg:text-lg ganancia-dato text-green-500 font-semibold">$  ${resultado.ganancias}</span>
       </div>`
     ;
@@ -511,8 +511,8 @@ function mostrarMesMayorGasto(datos) {
   const resultado = mesMayorGasto(datos);
 
   $mesMayorGasto.innerHTML =
-    `<div class="ganancia-box">
-        <span class="text-center text-[9px] sm:text-sm md:text-md lg:text-lg p-1 m-1">${resultado.mes}</span>
+    `<div class="ganancia-box flex flex-col md:flex-row justify-between md:w-48 items-center">
+        <span class="text-center text-[9px] sm:text-sm md:text-md lg:text-lg">${resultado.mes}</span>
         <span class="text-[9px] sm:text-sm md:text-md lg:text-lg ganancia-dato text-red-500 font-semibold">$ -${resultado.gasto}</span>
       </div>`
     ;
