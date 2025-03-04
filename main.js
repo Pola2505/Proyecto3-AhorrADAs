@@ -13,7 +13,7 @@ const $seccionFiltros = $('#seccion-filtros')
 const $seccionOperaciones = $('#seccion-operaciones')
 const $botonNuevaOperacion = $('#boton-nueva-operacion')
 const $seccionNuevaOperacion = $('#seccion-nueva-operacion')
-const $editarNuevaOperacion= $('#editar-nueva-operacion')
+const $editarNuevaOperacion = $('#editar-nueva-operacion')
 
 const $menu = $('#menu');
 const $categorias = $('#categorias-container');
@@ -40,7 +40,7 @@ const $imagenReportes = $("#imagen-reportes");  // Imagen que debe desaparecer
 
 const $editOperacionInput = $('#edit-operacion-input');
 const $editOperacionMonto = $('#edit-operacion-monto');
-const $editOperacionTipo  = $('#edit-operacion-tipo');
+const $editOperacionTipo = $('#edit-operacion-tipo');
 const $editFiltroCategorias = $('#edit-filtro-categorias');
 const $editFiltroDesde = $('#edit-filtro-desde');
 
@@ -55,15 +55,15 @@ const $mesMayorGasto = $('#mes-mayor-gasto');
 
 // Función para mostrar y ocultar filtros
 
-    $botonFiltros.addEventListener("click", function () {
-      if ($filtros.classList.contains("hidden")) {
-        $filtros.classList.remove("hidden");
-        $botonFiltros.textContent = "Ocultar filtros";
-      } else {
-        $filtros.classList.add("hidden");
-        $botonFiltros.textContent = "Mostrar filtros";
-      }
-    });
+$botonFiltros.addEventListener("click", function () {
+  if ($filtros.classList.contains("hidden")) {
+    $filtros.classList.remove("hidden");
+    $botonFiltros.textContent = "Ocultar filtros";
+  } else {
+    $filtros.classList.add("hidden");
+    $botonFiltros.textContent = "Mostrar filtros";
+  }
+});
 
 
 
@@ -77,32 +77,32 @@ const $$ = (element) => document.querySelectorAll(element);
 // El menu mobile icono 
 
 $('#menu-icono').addEventListener('click', () => {
-    $menu.classList.toggle('hidden');
+  $menu.classList.toggle('hidden');
 })
 
 // Vistas - navegacion
 
 $('#nav-categorias').addEventListener('click', (event) => {
-    event.preventDefault();
-    mostrarElemento([$categorias]);
-    ocultarElemento([$reportes, $balance, $seccionNuevaOperacion]);
+  event.preventDefault();
+  mostrarElemento([$categorias]);
+  ocultarElemento([$reportes, $balance, $seccionNuevaOperacion]);
 })
 
 $('#nav-reportes').addEventListener('click', (event) => {
-    event.preventDefault();
-    mostrarElemento([$reportes]);
-    ocultarElemento([$categorias, $balance, $seccionNuevaOperacion]);
+  event.preventDefault();
+  mostrarElemento([$reportes]);
+  ocultarElemento([$categorias, $balance, $seccionNuevaOperacion]);
 })
 
 $('#nav-balance').addEventListener('click', (event) => {
-    event.preventDefault();
-    mostrarElemento([$balance]);
-    ocultarElemento([$reportes, $categorias, $seccionNuevaOperacion]);
+  event.preventDefault();
+  mostrarElemento([$balance]);
+  ocultarElemento([$reportes, $categorias, $seccionNuevaOperacion]);
 })
 
 $('#logo').addEventListener('click', () => {
-    mostrarElemento([$balance]);
-    ocultarElemento([$reportes, $categorias, $seccionNuevaOperacion]);
+  mostrarElemento([$balance]);
+  ocultarElemento([$reportes, $categorias, $seccionNuevaOperacion]);
 })
 
 $('#boton-nueva-operacion').addEventListener('click', (event) => {
@@ -115,15 +115,15 @@ $('#boton-nueva-operacion').addEventListener('click', (event) => {
 //  Funciones auxiliares o generales 
 
 const mostrarElemento = (selectors) => {
-    for (const selector of selectors) {
-      selector.classList.remove('hidden');
-    }
+  for (const selector of selectors) {
+    selector.classList.remove('hidden');
+  }
 };
 
 const ocultarElemento = (selectors) => {
-    for (const selector of selectors) {
-      selector.classList.add('hidden');
-    }
+  for (const selector of selectors) {
+    selector.classList.add('hidden');
+  }
 };
 
 
@@ -147,7 +147,7 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
 
   const datos = funciones.obtenerDatos("operaciones")
   pintarDatos(datos)
-  
+
 })
 
 
@@ -159,7 +159,7 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
 $selectFiltroTipo.addEventListener("input", (e) => {
   const datos = funciones.obtenerDatos("operaciones")
 
-  if(e.target.value !== "all") {
+  if (e.target.value !== "all") {
     const tipoFiltrado = datos.filter(elem => elem.tipo === e.target.value)
     pintarDatos(tipoFiltrado)
   } else {
@@ -172,7 +172,7 @@ $selectFiltroTipo.addEventListener("input", (e) => {
 
 $selectFiltroCategorias.addEventListener("input", (e) => {
   const datos = funciones.obtenerDatos("operaciones")
-  if(e.target.value !== "all") {
+  if (e.target.value !== "all") {
     const categoriaFiltrada = datos.filter(elem => elem.categoria === e.target.value)
     pintarDatos(categoriaFiltrada)
   } else {
@@ -210,25 +210,37 @@ $selectFiltroOrden.addEventListener("input", (e) => {
 
 function pintarDatos(array) {
 
-  $operacionesCargadas.innerHTML = array.map(operacion => {
-    
-    const colorMonto = operacion.tipo === "ganancias" ? "text-green-500" : "text-red-500";
-    const signoMonto = operacion.tipo === "ganancias" ? `+` : `-`;
+  if (array.length === 0) {
+    ocultarElemento([$columnasCategorias]);
+    $operacionesCargadas.innerHTML = `
+    <img src="./imagenes/wallet.svg" alt="Ilustración de billetera" class="w-40 sm:w-60">
+    <p class="text-2xl text-textPrimary mt-4 mb-2">Sin resultados</p>
+    <p class="text-1xl text-textPrimary mb-6"> Cambia los filtros o agrega operaciones </p>
+    `
+  } else {
+    $operacionesCargadas.innerHTML = array.map(operacion => {
 
-    return `
-      <div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
-        <span class="text-left font-semibold w-1/4">${operacion.descripcion}</span>
-        <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${operacion.categoria}</span>
-        <span class="text-center text-sm w-1/6">${operacion.fecha}</span>
-        <span class="text-center font-semibold w-1/6 ${colorMonto}">${signoMonto}$${operacion.monto}</span> 
-        <div class="flex gap-4 text-xs text-pink-500 w-1/6 justify-end">
-          <button id="${operacion.id}" class="hover:underline editar-boton">Editar</button>
-          <button id="${operacion.id}" class="hover:underline eliminar-boton">Eliminar</button>
-        </div>
-      </div>`;
-  }).join('');
-  
-  mostrarElemento([$columnasCategorias]);
+      const colorMonto = operacion.tipo === "ganancias" ? "text-green-500" : "text-red-500";
+      const signoMonto = operacion.tipo === "ganancias" ? `+` : `-`;
+
+      return `
+        <div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
+          <span class="text-left font-semibold w-1/4">${operacion.descripcion}</span>
+          <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${operacion.categoria}</span>
+          <span class="text-center text-sm w-1/6">${operacion.fecha}</span>
+          <span class="text-center font-semibold w-1/6 ${colorMonto}">${signoMonto}$${operacion.monto}</span> 
+          <div class="flex gap-4 text-xs text-pink-500 w-1/6 justify-end">
+            <button id="${operacion.id}" class="hover:underline editar-boton">Editar</button>
+            <button id="${operacion.id}" class="hover:underline eliminar-boton">Eliminar</button>
+          </div>
+        </div>`;
+    }).join('');
+    mostrarElemento([$columnasCategorias]);
+  }
+
+
+
+
   mostrarElemento([$balance]);
   ocultarElemento([$seccionNuevaOperacion]);
 
@@ -242,7 +254,7 @@ function pintarDatos(array) {
   mostrarMesMayorGanancia(array);
   mostrarMesMayorGasto(array);
 
-  }
+}
 
 
 
@@ -252,7 +264,7 @@ const botonesDeEdicionOperacion = () => {
   const $$arrayEditarBoton = $$('.editar-boton');
   const $$arrayEliminarBoton = $$('.eliminar-boton');
 
-  $$arrayEliminarBoton.forEach( boton => {
+  $$arrayEliminarBoton.forEach(boton => {
     boton.addEventListener('click', (e) => {
       const nuevasOperaciones = funciones.eliminarOperacion(e.target.id)
       pintarDatos(nuevasOperaciones)
@@ -291,7 +303,7 @@ $editarNuevaOperacion.addEventListener("submit", (event) => {
     return;
   }
 
-  const nuevosDatos = {  
+  const nuevosDatos = {
     descripcion: event.target[0].value,
     monto: Number(event.target[1].value),
     tipo: event.target[2].value,
@@ -308,7 +320,7 @@ $editarNuevaOperacion.addEventListener("submit", (event) => {
 
 const actualizarTotalBalance = () => {
   const datos = funciones.obtenerDatos("operaciones");
- 
+
 
   const datosGanancias = funciones.filtrarPorTipo("ganancias");
   const totalDatosGanancias = datosGanancias.reduce((acc, curr) => acc + curr.monto, 0);
@@ -320,7 +332,7 @@ const actualizarTotalBalance = () => {
   //  El total es: GANANCIAS - GASTOS
   const totalBalance = totalDatosGanancias - totalDatosGastos;
 
-  if(totalBalance < 0) {
+  if (totalBalance < 0) {
     $total.classList.add("text-red-500");
     $total.classList.remove("text-green-500");
   } else {
@@ -330,7 +342,7 @@ const actualizarTotalBalance = () => {
 
   $ganancias.innerText = `$+ ${totalDatosGanancias}`;
   $gastos.innerText = `$- ${totalDatosGastos}`;
-  $total.innerText = `$ ${totalBalance}`; 
+  $total.innerText = `$ ${totalBalance}`;
 };
 
 
@@ -371,7 +383,7 @@ function calcularResumen(datos) {
 
 function mostrarResumen(datos) {
   const resumen = calcularResumen(datos);
-  
+
 
   $categoriasReporte.innerHTML = Object.entries(resumen).map(([categoria, datos]) => `
   <div class="flex justify-between items-end w-full bg-gray-100 p-3 rounded-lg shadow-md m-1 categoria-box">
@@ -411,7 +423,7 @@ function calcularResumenPorMes(datos) {
 
 function mostrarResumenPorMes(datos) {
   const resumen = calcularResumenPorMes(datos);
-  
+
   $totalesMesReporte.innerHTML = Object.entries(resumen).map(([mes, datos]) => `
     <div class="mes-box flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
       <span class="w-1/8 text-left text-[9px] sm:text-sm md:text-md lg:text-lg mes-titulo">${mes}</span>
@@ -432,10 +444,10 @@ function categoriaMayorGanancia(datos) {
       return acc;
     }, {});
 
- 
+
   return Object.entries(gananciasPorCategoria)
-    .reduce((max, [categoria, ganancias]) => 
-      ganancias > max.ganancias ? { categoria, ganancias } : max, 
+    .reduce((max, [categoria, ganancias]) =>
+      ganancias > max.ganancias ? { categoria, ganancias } : max,
       { categoria: null, ganancias: 0 }
     );
 }
@@ -461,10 +473,10 @@ function categoriaMayorGasto(datos) {
       return acc;
     }, {});
 
- 
+
   return Object.entries(gastosPorCategoria)
-    .reduce((max, [categoria, gasto]) => 
-      gasto > max.gasto ? { categoria, gasto } : max, 
+    .reduce((max, [categoria, gasto]) =>
+      gasto > max.gasto ? { categoria, gasto } : max,
       { categoria: null, gasto: 0 }
     );
 }
@@ -484,17 +496,17 @@ function mostrarCategoriaMayorGasto(datos) {
 
 function mesMayorGanancia(datos) {
   const gananciasPorMes = datos
-    .filter(op => op.tipo === "ganancias") 
+    .filter(op => op.tipo === "ganancias")
     .reduce((acc, { fecha, monto }) => {
-      const mes = fecha.slice(0, 7); 
+      const mes = fecha.slice(0, 7);
       acc[mes] = (acc[mes] || 0) + monto;
       return acc;
     }, {});
 
-  
+
   return Object.entries(gananciasPorMes)
-    .reduce((max, [mes, ganancias]) => 
-      ganancias > max.ganancias ? { mes, ganancias } : max, 
+    .reduce((max, [mes, ganancias]) =>
+      ganancias > max.ganancias ? { mes, ganancias } : max,
       { mes: null, ganancias: 0 }
     );
 }
@@ -514,17 +526,17 @@ function mostrarMesMayorGanancia(datos) {
 
 function mesMayorGasto(datos) {
   const gastoPorMes = datos
-    .filter(op => op.tipo === "gasto") 
+    .filter(op => op.tipo === "gasto")
     .reduce((acc, { fecha, monto }) => {
-      const mes = fecha.slice(0, 7); 
+      const mes = fecha.slice(0, 7);
       acc[mes] = (acc[mes] || 0) + monto;
       return acc;
     }, {});
 
-  
+
   return Object.entries(gastoPorMes)
-    .reduce((max, [mes, gasto]) => 
-      gasto > max.gasto ? { mes, gasto } : max, 
+    .reduce((max, [mes, gasto]) =>
+      gasto > max.gasto ? { mes, gasto } : max,
       { mes: null, gasto: 0 }
     );
 }
