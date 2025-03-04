@@ -23,9 +23,11 @@ const $balance = $('#balance-container');
 
 const $crearNuevaOperacion = $('#crear-nueva-operacion');
 const $operacionesCargadas = $('#operaciones-cargadas');
-
 const $selectFiltroTipo = $('#select-filtro-tipo');
+
+const $filtroCategoriasOperacion = $('#filtro-categorias');
 const $selectFiltroCategorias = $('#select-filtro-categorias');
+
 const $filtroDesde = $('#filtro-desde');
 const $selectFiltroOrden = $('#select-filtro-orden');
 const $columnasCategorias = $('#columnas-categorias');
@@ -43,6 +45,10 @@ const $editOperacionMonto = $('#edit-operacion-monto');
 const $editOperacionTipo  = $('#edit-operacion-tipo');
 const $editFiltroCategorias = $('#edit-filtro-categorias');
 const $editFiltroDesde = $('#edit-filtro-desde');
+
+
+
+const $crearNuevaCategoria = $('#crear-nueva-categoria');
 
 const $inputCategoria = $('#categoria-input');
 const $botonAgregarCategoria = $('#boton-agregar-categoria');
@@ -211,7 +217,7 @@ $selectFiltroOrden.addEventListener("input", (e) => {
 });
 
 
-////////////// SECCIÓN EDITAR Y ELIMINAR OPERACIONES //////////////////////7
+////////////// SECCIÓN PINTAR NUEVA OPERACION //////////////////////7
 
 function pintarDatos(array) {
 
@@ -355,48 +361,174 @@ const totalesCategoriasReporte = (array) => {
   };
 }
 
+/////////////// PROBANDO CREAR CATEGORIAS /////////////
 
+
+/// Evento creación de una nueva categoria
+
+// $crearNuevaCategoria.addEventListener("submit", (evento) => {
+//   evento.preventDefault();
+
+//   const nuevaCategoria = {
+//     id: crypto.randomUUID(),
+//     nombre: evento.target[0].value
+//   }
+
+//   funciones.agregarCategoria(nuevaCategoria)
+//   pintarCategoria(array)
+
+
+//   const datos = funciones.obtenerDatos("operaciones")
+//   pintarDatos(datos)
+//  })
+
+// /// Función de pintar una nueva categoria
+
+//  function pintarCategoria(array) {
+
+//   $listaCategorias.innerHTML = "";
+//   for (const categoria of array) {
+//     $listaCategorias.innerHTML += `<div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
+
+//         <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${categoria.nombre}</span>
+
+//         <div class="flex gap-4 text-xs text-pink-500 w-1/6 justify-end">
+//           <button id="${categoria.id}" class="hover:underline editar-boton">Editar</button>
+//           <button id="${categoria.id}" class="hover:underline eliminar-boton">Eliminar</button>
+//         </div>
+//       </div>`
+//   }
+// }
+
+
+
+// Evento para agregar una nueva categoría
+$crearNuevaCategoria.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+
+  const nuevaCategoria = {
+    id: crypto.randomUUID(),
+    nombre: evento.target[0].value.trim()
+  };
+
+  if (nuevaCategoria.nombre === "") return; // Evitamos agregar categorías vacías
+
+  // Agregar la categoría al almacenamiento
+  funciones.agregarCategoria(nuevaCategoria);
+
+  // Volver a cargar las categorías desde el almacenamiento
+  const categoriasActualizadas = funciones.obtenerDatos("categorias");
+
+  // Pintar las categorías en pantalla
+  pintarCategoria(categoriasActualizadas);
+
+  // Limpiar input después de agregar
+  evento.target[0].value = "";
+});
+
+// Función para pintar las categorías
+function pintarCategoria(array) {
+  $listaCategorias.innerHTML = ""; // Limpiamos antes de volver a dibujar
+
+  for (const categoria of array) {
+    $listaCategorias.innerHTML += `
+      <div class="flex justify-between py-3">
+        <span class="bg-violet-200 text-violet-600 text-xs p-1 rounded">${categoria.nombre}</span>
+        <div class="flex gap-4 text-xs text-pink-500">
+          <button class="button-edit" data-id="${categoria.id}">Editar</button>
+          <button class="button-delete" data-id="${categoria.id}">Eliminar</button>
+        </div>
+      </div>
+    `
+    $filtroCategoriasOperacion.innerHTML += ` 
+      <option value="${categoria.nombre}">${categoria.nombre}</option>
+    `;     // Agregamos la categoría al select de nueva operación
+
+        $selectFiltroCategorias.innerHTML += `
+        <option value="${categoria.nombre}">${categoria.nombre}</option>
+      `;
+
+
+  }
+}
+
+
+// //// agregar nueva categoria a select de filtros
+
+// function agregarCategoria(nuevaCategoria) {
+  
+//   // Verificar si la categoría ya está en la lista
+//   const existe = Array.from($selectFiltroCategorias.options).some(option => option.value === nuevaCategoria);
+  
+//   if (!existe) {
+//       // Crear nueva opción
+//       const nuevaOpcion = document.createElement("option");
+//       nuevaOpcion.value = nuevaCategoria;
+//       nuevaOpcion.textContent = nuevaCategoria;
+      
+//       // Agregar la nueva opción al <select>
+//       $selectFiltroCategorias.appendChild(nuevaOpcion);
+//   }
+// }
+
+
+// //// agregar nueva categoria a select de nueva operacion
+// function agregarCategoriaOperacion(nuevaCategoriaOperacion) {
+  
+//   // Verificar si la categoría ya está en la lista
+//   const existe = Array.from($filtroCategoriasOperacion.options).some(option => option.value === nuevaCategoriaOperacion);
+  
+//   if (!existe) {
+//       // Crear nueva opción
+//       const nuevaOpcion = document.createElement("option");
+//       nuevaOpcion.value = nuevaCategoriaOperacion;
+//       nuevaOpcion.textContent = nuevaCategoriaOperacion;
+      
+//       // Agregar la nueva opción al <select>
+//       $filtroCategoriasOperacion.appendChild(nuevaOpcion);
+//   }
+// }
 
 
 
 /////////////// PROBANDO SECCIÓN CATEGORIAS /////////////
 
-const categorias = []; // Array para almacenar las categorías
+// const categorias = []; // Array para almacenar las categorías
 
-$botonAgregarCategoria.addEventListener('click', () => {
-  const nombreCategoria = $inputCategoria.value.trim();
+// $botonAgregarCategoria.addEventListener('click', () => {
+//   const nombreCategoria = $inputCategoria.value.trim();
 
-  if (nombreCategoria !== '') {
-    categorias.push({ nombre: nombreCategoria }); // Agrega la nueva categoría al array
-    pintarCategorias();
-    $inputCategoria.value = ''; // Limpia el input después de agregar
-  }
-});
+//   if (nombreCategoria !== '') {
+//     categorias.push({ nombre: nombreCategoria }); // Agrega la nueva categoría al array
+//     pintarCategorias();
+//     $inputCategoria.value = ''; // Limpia el input después de agregar
+//   }
+// });
 
 
-// Función para pintar las categorías en el HTML
-function pintarCategorias() {
-  $listaCategorias.innerHTML = ''; // Limpia la lista antes de pintar nuevamente
+// // Función para pintar las categorías en el HTML
+// function pintarCategorias() {
+//   $listaCategorias.innerHTML = ''; // Limpia la lista antes de pintar nuevamente
 
-  for (const categoria of categorias) {
-    $listaCategorias.innerHTML += `
-      <div class="flex justify-between py-3">
-        <span class="bg-violet-200 text-violet-600 text-xs p-1 rounded">${categoria.nombre}</span>
-      </div>`;
-  }
-}
+//   for (const categoria of categorias) {
+//     $listaCategorias.innerHTML += `
+//       <div class="flex justify-between py-3">
+//         <span class="bg-violet-200 text-violet-600 text-xs p-1 rounded">${categoria.nombre}</span>
+//       </div>`;
+//   }
+// }
 
 
 
 ///////////// PROBANDO ELIMINAR Y EDITAR CATEGORÍA ///////////////
 
 
-  const $$arrayButtonsDelete = $$(".button-delete")
-  const $$arrayButtonsEdit = $$(".button-edit")
+  // const $$arrayButtonsDelete = $$(".button-delete")
+  // const $$arrayButtonsEdit = $$(".button-edit")
 
-  $$arrayButtonsDelete.forEach(button => {
-    button.addEventListener("click", (e) => {
-      console.log(HOLAAA)
+  // $$arrayButtonsDelete.forEach(button => {
+  //   button.addEventListener("click", (e) => {
+  //     console.log(HOLAAA)
 //       const nuevoArray = funciones.quitarVenta(e.target.id)
 //       pintarDatos(nuevoArray)
 //     })
@@ -416,33 +548,9 @@ function pintarCategorias() {
 //       $inputEditCantidad.value = ventaBuscada.quantity
 
 //       $formEdit.id = ventaBuscada.id
-     })
-   })
+  //    })
+  //  })
  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 window.onload = () => {
@@ -455,6 +563,10 @@ window.onload = () => {
   botonesDeEdicionOperacion();
   totalesCategoriasReporte(datos);
 
-  pintarCategorias()
+  const categoriasGuardadas = funciones.obtenerDatos("categorias") || [];
+  pintarCategoria(categoriasGuardadas);
+  // agregarCategoria();
+  // agregarCategoriaOperacion();
+
 
 }
