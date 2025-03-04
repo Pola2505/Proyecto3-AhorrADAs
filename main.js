@@ -210,20 +210,23 @@ $selectFiltroOrden.addEventListener("input", (e) => {
 
 function pintarDatos(array) {
 
-  $operacionesCargadas.innerHTML = "";
-  for (const operacion of array) {
-    $operacionesCargadas.innerHTML += `<div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
+  $operacionesCargadas.innerHTML = array.map(operacion => {
+    
+    const colorMonto = operacion.tipo === "ganancias" ? "text-green-500" : "text-red-500";
+    const signoMonto = operacion.tipo === "ganancias" ? `-` : `+`;
+
+    return `
+      <div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
         <span class="text-left font-semibold w-1/4">${operacion.descripcion}</span>
         <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${operacion.categoria}</span>
         <span class="text-center text-sm w-1/6">${operacion.fecha}</span>
-        <span class="text-center text-red-500 font-semibold w-1/6">$${operacion.monto}</span> 
+        <span class="text-center font-semibold w-1/6 ${colorMonto}">${signoMonto}$${operacion.monto}</span> 
         <div class="flex gap-4 text-xs text-pink-500 w-1/6 justify-end">
-          <button id="${operacion.id}" class="hover:underline editar-boton">Editar</button>
-          <button id="${operacion.id}" class="hover:underline eliminar-boton">Eliminar</button>
+          <button data-id="${operacion.id}" class="hover:underline editar-boton">Editar</button>
+          <button data-id="${operacion.id}" class="hover:underline eliminar-boton">Eliminar</button>
         </div>
-      </div>`
-  }
-
+      </div>`;
+  }).join('');
   mostrarElemento([$columnasCategorias]);
   mostrarElemento([$balance]);
   ocultarElemento([$seccionNuevaOperacion]);
@@ -231,7 +234,11 @@ function pintarDatos(array) {
   actualizarTotalBalance();
   actualizarReportes();
   botonesDeEdicionOperacion();
-}
+
+  }
+
+
+
 
 const botonesDeEdicionOperacion = () => {
 
@@ -352,11 +359,11 @@ function mostrarResumen(datos) {
   
 
   $categoriasReporte.innerHTML = Object.entries(resumen).map(([categoria, datos]) => `
-  <div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1 categoria-box">
-    <span class="categoria-nombre text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1">${categoria}</span>
-    <span class="text-[9px] sm:text-sm md:text-md lg:text-lg categoria-dato text-green-500 font-semibold">$${datos.ganancias}</span>
-    <span class="text-[9px] sm:text-sm md:text-md lg:text-lg categoria-dato text-red-500 font-semibold">$ -${datos.gasto}</span>
-    <span class="text-[9px] sm:text-sm md:text-md lg:text-lg categoria-dato font-semibold">$${datos.balance}</span>
+  <div class="flex justify-between items-end w-full bg-gray-100 p-3 rounded-lg shadow-md m-1 categoria-box">
+    <span class="w-1/6 categoria-nombre text-center bg-violet-200 text-violet-600 text-xs px-1 rounded m-1">${categoria}</span>
+    <span class="w-1/4 text-right text-[9px] sm:text-sm md:text-md lg:text-lg categoria-dato text-green-500 font-semibold">$${datos.ganancias}</span>
+    <span class="w-1/4 text-right text-[9px] sm:text-sm md:text-md lg:text-lg categoria-dato text-red-500 font-semibold">$ -${datos.gasto}</span>
+    <span class="w-1/4 text-right text-[9px] sm:text-sm md:text-md lg:text-lg categoria-dato font-semibold">$${datos.balance}</span>
   </div>
 `).join("");
 
@@ -392,10 +399,10 @@ function mostrarResumenPorMes(datos) {
   
   $totalesMesReporte.innerHTML = Object.entries(resumen).map(([mes, datos]) => `
     <div class="mes-box flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
-      <span class="text-[9px] sm:text-sm md:text-md lg:text-lg mes-titulo">${mes}</span>
-      <span class="text-[9px] sm:text-sm md:text-md lg:text-lg mes-dato text-green-500 font-semibold">$${datos.ganancias}</span>
-      <span class="text-[9px] sm:text-sm md:text-md lg:text-lg mes-dato text-red-500 font-semibold">$ -${datos.gasto}</span>
-      <span class="text-[9px] sm:text-sm md:text-md lg:text-lg mes-dato font-semibold">$${datos.balance}</span>
+      <span class="w-1/8 text-left text-[9px] sm:text-sm md:text-md lg:text-lg mes-titulo">${mes}</span>
+      <span class="w-1/4 text-right text-[9px] sm:text-sm md:text-md lg:text-lg mes-dato text-green-500 font-semibold">$${datos.ganancias}</span>
+      <span class="w-1/4 text-right text-[9px] sm:text-sm md:text-md lg:text-lg mes-dato text-red-500 font-semibold">$ -${datos.gasto}</span>
+      <span class="w-1/4 text-right text-[9px] sm:text-sm md:text-md lg:text-lg mes-dato font-semibold">$${datos.balance}</span>
     </div>
   `).join("");
 }
