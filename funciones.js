@@ -13,15 +13,9 @@ function agregarOperacion(objetoNuevaOperacion) {
   guardarDatos("operaciones", [...datos, objetoNuevaOperacion])
 }
 
-// function agregarCategoria(objetoNuevaCategoria) {
-//    const datos = obtenerDatos("operaciones")
-//    guardarDatos("operaciones", [...datos, objetoNuevaCategoria])
-//  }
-
-
 function agregarCategoria(objetoNuevaCategoria) {
-  const datos = obtenerDatos("categorias") || []; // Obtenemos categorías o creamos un array vacío
-  guardarDatos("categorias", [...datos, objetoNuevaCategoria]); // Guardamos las nuevas categorías
+  const datos = obtenerDatos("categoria") || []; // Obtenemos categorías o creamos un array vacío
+  guardarDatos("categoria", [...datos, objetoNuevaCategoria]); // Guardamos las nuevas categorías
 }
 
 
@@ -89,23 +83,27 @@ function editarOperacion(idOperacion, nuevosDatos) {
   return datos
 }
 
+ ///////// eliminar categoria
+ const eliminarCategoria = (idCategoria) => {
+   const datos = obtenerDatos("categoria") || []; // Obtenemos categorías o creamos un array vacío
+   const categoriaEliminada = datos.filter(categoria => categoria.id !== idCategoria)
 
+   guardarDatos("categoria", categoriaEliminada)
 
-// ////////////////// PROBANDO FUNCION DE ELIMINAR CATEGORIA /////////////////////
+   return categoriaEliminada;
+ }
 
-// function eliminarCategoria(idCategoria) {
-//   const datos = obtenerDatos("operaciones");
-//   const categoriaEliminada = datos.filter(categoria => categoria.id !== idCategoria)
+ ///////// editar categoria
+ function editarCategoria(idCategoria, nuevosDatos) {
+  const datos = obtenerDatos("categoria")
+  const indiceBuscado = datos.findIndex((categoria) => categoria.id == idCategoria)
 
-//   guardarDatos("operaciones", categoriaEliminada)
+  datos.splice(indiceBuscado, 1, {...nuevosDatos, id: idCategoria});
 
-//   return categoriaEliminada;
-// }
+  guardarDatos("categoria", datos)
 
-
-
-
-
+  return datos
+}
 
 export default {
   obtenerDatos,
@@ -117,5 +115,7 @@ export default {
   ordenarDatos,
   eliminarOperacion,
   editarOperacion,
-  agregarCategoria
+  agregarCategoria,
+  eliminarCategoria,
+  editarCategoria
 }

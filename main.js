@@ -46,6 +46,9 @@ const $editOperacionTipo  = $('#edit-operacion-tipo');
 const $editFiltroCategorias = $('#edit-filtro-categorias');
 const $editFiltroDesde = $('#edit-filtro-desde');
 
+const $seccionEditarCategoria = $('#seccion-editar-categorias');
+
+
 
 
 const $crearNuevaCategoria = $('#crear-nueva-categoria');
@@ -56,6 +59,7 @@ const $listaCategorias = $('#lista-categorias'); // Contenedor donde se mostrar�
 
 const $categoriasReporte = $('#categorias-reporte');
 
+const $editarCategoria = $('#editar-categoria');
 
 
 
@@ -78,8 +82,6 @@ const $categoriasReporte = $('#categorias-reporte');
 // Funciones para buscar los elementos del DOM
 
 const $$ = (element) => document.querySelectorAll(element);
-
-
 
 
 // El menu mobile icono 
@@ -351,7 +353,7 @@ const actualizarReportes = () => {
 
 const totalesCategoriasReporte = (array) => {
   const datos = funciones.obtenerDatos("operaciones");
-  console.log(datos)
+
   
   for (const operacion of array) {
     $categoriasReporte.innerHTML += `<div class="flex flex-col justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
@@ -360,45 +362,6 @@ const totalesCategoriasReporte = (array) => {
     </div>`
   };
 }
-
-/////////////// PROBANDO CREAR CATEGORIAS /////////////
-
-
-/// Evento creación de una nueva categoria
-
-// $crearNuevaCategoria.addEventListener("submit", (evento) => {
-//   evento.preventDefault();
-
-//   const nuevaCategoria = {
-//     id: crypto.randomUUID(),
-//     nombre: evento.target[0].value
-//   }
-
-//   funciones.agregarCategoria(nuevaCategoria)
-//   pintarCategoria(array)
-
-
-//   const datos = funciones.obtenerDatos("operaciones")
-//   pintarDatos(datos)
-//  })
-
-// /// Función de pintar una nueva categoria
-
-//  function pintarCategoria(array) {
-
-//   $listaCategorias.innerHTML = "";
-//   for (const categoria of array) {
-//     $listaCategorias.innerHTML += `<div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
-
-//         <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${categoria.nombre}</span>
-
-//         <div class="flex gap-4 text-xs text-pink-500 w-1/6 justify-end">
-//           <button id="${categoria.id}" class="hover:underline editar-boton">Editar</button>
-//           <button id="${categoria.id}" class="hover:underline eliminar-boton">Eliminar</button>
-//         </div>
-//       </div>`
-//   }
-// }
 
 
 
@@ -411,20 +374,16 @@ $crearNuevaCategoria.addEventListener("submit", (evento) => {
     nombre: evento.target[0].value.trim()
   };
 
-  if (nuevaCategoria.nombre === "") return; // Evitamos agregar categorías vacías
+  if (nuevaCategoria.nombre === "") return; // Evita agregar categorías vacías
 
-  // Agregar la categoría al almacenamiento
-  funciones.agregarCategoria(nuevaCategoria);
+  funciones.agregarCategoria(nuevaCategoria); // Agrega la categoría al almacenamiento
 
-  // Volver a cargar las categorías desde el almacenamiento
-  const categoriasActualizadas = funciones.obtenerDatos("categorias");
+  const categoriasActualizadas = funciones.obtenerDatos("categoria");   // Volver a cargar las categorías desde el almacenamiento
 
-  // Pintar las categorías en pantalla
-  pintarCategoria(categoriasActualizadas);
-
-  // Limpiar input después de agregar
-  evento.target[0].value = "";
+  pintarCategoria(categoriasActualizadas);   // Pinta las categorías en pantalla
+  evento.target[0].value = "";   // Limpia input después de agregar
 });
+
 
 // Función para pintar las categorías
 function pintarCategoria(array) {
@@ -435,122 +394,77 @@ function pintarCategoria(array) {
       <div class="flex justify-between py-3">
         <span class="bg-violet-200 text-violet-600 text-xs p-1 rounded">${categoria.nombre}</span>
         <div class="flex gap-4 text-xs text-pink-500">
-          <button class="button-edit" data-id="${categoria.id}">Editar</button>
-          <button class="button-delete" data-id="${categoria.id}">Eliminar</button>
+          <button class="button-edit" id="${categoria.id}">Editar</button>
+          <button class="button-delete" id="${categoria.id}">Eliminar</button>
         </div>
       </div>
     `
     $filtroCategoriasOperacion.innerHTML += ` 
       <option value="${categoria.nombre}">${categoria.nombre}</option>
-    `;     // Agregamos la categoría al select de nueva operación
+    `;     // Agregue la categoría al select de nueva operación
 
-        $selectFiltroCategorias.innerHTML += `
-        <option value="${categoria.nombre}">${categoria.nombre}</option>
-      `;
-
-
+    $selectFiltroCategorias.innerHTML += `
+      <option value="${categoria.nombre}">${categoria.nombre}</option>
+      `; // Agregue la categoría al select de filtros por categoria
   }
+
+  botonesDeEdicionCategorias();
 }
 
 
-// //// agregar nueva categoria a select de filtros
+const botonesDeEdicionCategorias = () => {
 
-// function agregarCategoria(nuevaCategoria) {
-  
-//   // Verificar si la categoría ya está en la lista
-//   const existe = Array.from($selectFiltroCategorias.options).some(option => option.value === nuevaCategoria);
-  
-//   if (!existe) {
-//       // Crear nueva opción
-//       const nuevaOpcion = document.createElement("option");
-//       nuevaOpcion.value = nuevaCategoria;
-//       nuevaOpcion.textContent = nuevaCategoria;
-      
-//       // Agregar la nueva opción al <select>
-//       $selectFiltroCategorias.appendChild(nuevaOpcion);
-//   }
-// }
-
-
-// //// agregar nueva categoria a select de nueva operacion
-// function agregarCategoriaOperacion(nuevaCategoriaOperacion) {
-  
-//   // Verificar si la categoría ya está en la lista
-//   const existe = Array.from($filtroCategoriasOperacion.options).some(option => option.value === nuevaCategoriaOperacion);
-  
-//   if (!existe) {
-//       // Crear nueva opción
-//       const nuevaOpcion = document.createElement("option");
-//       nuevaOpcion.value = nuevaCategoriaOperacion;
-//       nuevaOpcion.textContent = nuevaCategoriaOperacion;
-      
-//       // Agregar la nueva opción al <select>
-//       $filtroCategoriasOperacion.appendChild(nuevaOpcion);
-//   }
-// }
-
-
-
-/////////////// PROBANDO SECCIÓN CATEGORIAS /////////////
-
-// const categorias = []; // Array para almacenar las categorías
-
-// $botonAgregarCategoria.addEventListener('click', () => {
-//   const nombreCategoria = $inputCategoria.value.trim();
-
-//   if (nombreCategoria !== '') {
-//     categorias.push({ nombre: nombreCategoria }); // Agrega la nueva categoría al array
-//     pintarCategorias();
-//     $inputCategoria.value = ''; // Limpia el input después de agregar
-//   }
-// });
-
-
-// // Función para pintar las categorías en el HTML
-// function pintarCategorias() {
-//   $listaCategorias.innerHTML = ''; // Limpia la lista antes de pintar nuevamente
-
-//   for (const categoria of categorias) {
-//     $listaCategorias.innerHTML += `
-//       <div class="flex justify-between py-3">
-//         <span class="bg-violet-200 text-violet-600 text-xs p-1 rounded">${categoria.nombre}</span>
-//       </div>`;
-//   }
-// }
-
-
-
-///////////// PROBANDO ELIMINAR Y EDITAR CATEGORÍA ///////////////
-
-
-  // const $$arrayButtonsDelete = $$(".button-delete")
-  // const $$arrayButtonsEdit = $$(".button-edit")
-
-  // $$arrayButtonsDelete.forEach(button => {
-  //   button.addEventListener("click", (e) => {
-  //     console.log(HOLAAA)
-//       const nuevoArray = funciones.quitarVenta(e.target.id)
-//       pintarDatos(nuevoArray)
-//     })
-//   })
-
-//   $$arrayButtonsEdit.forEach(button => {
-//     button.addEventListener("click", (e) => {
-//       hideElement([$sectionViewHome, $sectionViewReporte, $("#form-create")])
-//       showElement([$sectionViewVenta, $formEdit])
-
-//       const datos = funciones.obtenerDatos("ventas")
-//       const ventaBuscada = datos.find(elem => elem.id === e.target.id)
-
-//       $selectEditType.value = ventaBuscada.type
-//       $inputEditValor.value = ventaBuscada.value
-//       $inputEditFecha.value = ventaBuscada.date
-//       $inputEditCantidad.value = ventaBuscada.quantity
-
-//       $formEdit.id = ventaBuscada.id
-  //    })
-  //  })
+  const $$arrayEditarBotonCategoria = $$('.button-edit');
+  const $$arrayEliminarBotonCategoria = $$('.button-delete');
  
+  $$arrayEliminarBotonCategoria.forEach( boton => {
+    boton.addEventListener('click', (e) => {
+      const nuevasCategorias = funciones.eliminarCategoria(e.target.id)
+      pintarCategoria(nuevasCategorias);
+    })
+  });
+
+  
+  $$arrayEditarBotonCategoria.forEach((boton) => {
+    boton.addEventListener('click', (e) => {
+      mostrarElemento([$seccionEditarCategoria]);
+      ocultarElemento([$categorias]);
+
+      const datos = funciones.obtenerDatos("categoria");
+      const categoriaParaEditar = datos.find(elem => elem.id === e.target.id);
+      
+      $inputCategoria.value = categoriaParaEditar.nombre
+      $editarCategoria.id = categoriaParaEditar.id;
+    })
+
+  })
+}
+
+
+$editarCategoria.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const datos = funciones.obtenerDatos("categoria");
+  const categoriaParaEditar = datos.find(elem => elem.id === event.target.id);
+
+  if (!categoriaParaEditar) {
+    console.error("No se encontró la operación a editar");
+    return;
+  }
+
+  const nuevosDatos = {  
+    nombre: event.target[0].value
+  };
+
+  const datosModificados = funciones.editarCategoria(categoriaParaEditar.id, nuevosDatos);
+
+  pintarCategoria(datosModificados);
+  ocultarElemento([$seccionEditarCategoria]);
+  mostrarElemento([$categorias]);
+
+  console.log(nuevosDatos.nombre)
+});
+
 
 
 window.onload = () => {
@@ -563,10 +477,8 @@ window.onload = () => {
   botonesDeEdicionOperacion();
   totalesCategoriasReporte(datos);
 
-  const categoriasGuardadas = funciones.obtenerDatos("categorias") || [];
+  const categoriasGuardadas = funciones.obtenerDatos("categoria") || [];
   pintarCategoria(categoriasGuardadas);
-  // agregarCategoria();
-  // agregarCategoriaOperacion();
 
-
+  botonesDeEdicionCategorias();
 }
