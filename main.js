@@ -222,8 +222,8 @@ function pintarDatos(array) {
         <span class="text-center text-sm w-1/6">${operacion.fecha}</span>
         <span class="text-center font-semibold w-1/6 ${colorMonto}">${signoMonto}$${operacion.monto}</span> 
         <div class="flex gap-4 text-xs text-pink-500 w-1/6 justify-end">
-          <button data-id="${operacion.id}" class="hover:underline editar-boton">Editar</button>
-          <button data-id="${operacion.id}" class="hover:underline eliminar-boton">Eliminar</button>
+          <button id="${operacion.id}" class="hover:underline editar-boton">Editar</button>
+          <button id="${operacion.id}" class="hover:underline eliminar-boton">Eliminar</button>
         </div>
       </div>`;
   }).join('');
