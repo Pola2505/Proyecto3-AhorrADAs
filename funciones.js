@@ -1,3 +1,5 @@
+// --------------------------------------------------------------- Funciones de LOCAL STORAGE -----------------------------------------------------------
+
 function obtenerDatos(key) {
   const datos = JSON.parse(localStorage.getItem(key))
   return datos ? datos : [];
@@ -7,6 +9,7 @@ function guardarDatos(key, data) {
   localStorage.setItem(key, JSON.stringify(data))
 }
 
+//  --------------------------------------------------------------- Funciones de agregar OPERACION y CATEGORIA  -----------------------------------------------------------
 
 function agregarOperacion(objetoNuevaOperacion) {
   const datos = obtenerDatos("operaciones")
@@ -17,6 +20,8 @@ function agregarCategoria(objetoNuevaCategoria) {
   const datos = obtenerDatos("categoria") || []; // Obtenemos categorías o creamos un array vacío
   guardarDatos("categoria", [...datos, objetoNuevaCategoria]); // Guardamos las nuevas categorías
 }
+
+//  --------------------------------------------------------------- Funciones PARA FILTRAR  -------------------------------------------------------------------------------
 
 
 function filtrarPorTipo(tipo) {
@@ -34,8 +39,6 @@ const datos = obtenerDatos("operaciones")
 return datos.filter(elem => elem.fecha === fecha)
 }
 
-
-// 1️⃣ Definir la función ordenarDatos antes de usarla
 function ordenarDatos(criterio) {
 let datos = obtenerDatos("operaciones");
 
@@ -63,6 +66,8 @@ return datos.sort((a, b) => {
 });
 }
 
+//  --------------------------------------------------------------- Funciones de eliminar y editar OPERACION -----------------------------------------------------------
+
 const eliminarOperacion = (idOperacion) => {
   const datos = obtenerDatos("operaciones");
   const operacionEliminada = datos.filter(operacion => operacion.id !== idOperacion)
@@ -83,9 +88,10 @@ function editarOperacion(idOperacion, nuevosDatos) {
   return datos
 }
 
- ///////// eliminar categoria
+ //  --------------------------------------------------------------- Funciones de eliminar y editar las CATEGORIAS -----------------------------------------------------------
+
  const eliminarCategoria = (idCategoria) => {
-   const datos = obtenerDatos("categoria") || []; // Obtenemos categorías o creamos un array vacío
+   const datos = obtenerDatos("categoria") || []; 
    const categoriaEliminada = datos.filter(categoria => categoria.id !== idCategoria)
 
    guardarDatos("categoria", categoriaEliminada)
@@ -93,7 +99,6 @@ function editarOperacion(idOperacion, nuevosDatos) {
    return categoriaEliminada;
  }
 
- ///////// editar categoria
  function editarCategoria(idCategoria, nuevosDatos) {
   const datos = obtenerDatos("categoria")
   const indiceBuscado = datos.findIndex((categoria) => categoria.id == idCategoria)
@@ -104,6 +109,8 @@ function editarOperacion(idOperacion, nuevosDatos) {
 
   return datos
 }
+
+
 
 export default {
   obtenerDatos,
