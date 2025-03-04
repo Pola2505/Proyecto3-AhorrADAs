@@ -213,7 +213,7 @@ function pintarDatos(array) {
   $operacionesCargadas.innerHTML = array.map(operacion => {
     
     const colorMonto = operacion.tipo === "ganancias" ? "text-green-500" : "text-red-500";
-    const signoMonto = operacion.tipo === "ganancias" ? `-` : `+`;
+    const signoMonto = operacion.tipo === "ganancias" ? `+` : `-`;
 
     return `
       <div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
@@ -227,6 +227,7 @@ function pintarDatos(array) {
         </div>
       </div>`;
   }).join('');
+  
   mostrarElemento([$columnasCategorias]);
   mostrarElemento([$balance]);
   ocultarElemento([$seccionNuevaOperacion]);
@@ -234,6 +235,12 @@ function pintarDatos(array) {
   actualizarTotalBalance();
   actualizarReportes();
   botonesDeEdicionOperacion();
+  mostrarResumen(array);
+  mostrarResumenPorMes(array);
+  mostrarCategoriaMayorGanancia(array);
+  mostrarCategoriaMayorGasto(array);
+  mostrarMesMayorGanancia(array);
+  mostrarMesMayorGasto(array);
 
   }
 
@@ -312,6 +319,14 @@ const actualizarTotalBalance = () => {
 
   //  El total es: GANANCIAS - GASTOS
   const totalBalance = totalDatosGanancias - totalDatosGastos;
+
+  if(totalBalance < 0) {
+    $total.classList.add("text-red-500");
+    $total.classList.remove("text-green-500");
+  } else {
+    $total.classList.add("text-green-500");
+    $total.classList.remove("text-red-500");
+  }
 
   $ganancias.innerText = `$+ ${totalDatosGanancias}`;
   $gastos.innerText = `$- ${totalDatosGastos}`;
