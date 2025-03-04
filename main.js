@@ -23,9 +23,11 @@ const $balance = $('#balance-container');
 
 const $crearNuevaOperacion = $('#crear-nueva-operacion');
 const $operacionesCargadas = $('#operaciones-cargadas');
-
 const $selectFiltroTipo = $('#select-filtro-tipo');
+
+const $filtroCategoriasOperacion = $('#filtro-categorias');
 const $selectFiltroCategorias = $('#select-filtro-categorias');
+
 const $filtroDesde = $('#filtro-desde');
 const $selectFiltroOrden = $('#select-filtro-orden');
 const $columnasCategorias = $('#columnas-categorias');
@@ -44,7 +46,22 @@ const $editOperacionTipo  = $('#edit-operacion-tipo');
 const $editFiltroCategorias = $('#edit-filtro-categorias');
 const $editFiltroDesde = $('#edit-filtro-desde');
 
+const $seccionEditarCategoria = $('#seccion-editar-categorias');
+
+
+
+
+const $crearNuevaCategoria = $('#crear-nueva-categoria');
+
+const $inputCategoria = $('#categoria-input');
+const $botonAgregarCategoria = $('#boton-agregar-categoria');
+const $listaCategorias = $('#lista-categorias'); // Contenedor donde se mostrarán las categorías
+
 const $categoriasReporte = $('#categorias-reporte');
+
+const $editarCategoria = $('#editar-categoria');
+
+
 
 
 
@@ -65,8 +82,6 @@ const $categoriasReporte = $('#categorias-reporte');
 // Funciones para buscar los elementos del DOM
 
 const $$ = (element) => document.querySelectorAll(element);
-
-
 
 
 // El menu mobile icono 
@@ -203,6 +218,9 @@ $selectFiltroOrden.addEventListener("input", (e) => {
   pintarDatos(datosOrdenados);
 });
 
+
+////////////// SECCIÓN PINTAR NUEVA OPERACION //////////////////////7
+
 function pintarDatos(array) {
 
   $operacionesCargadas.innerHTML = "";
@@ -226,7 +244,11 @@ function pintarDatos(array) {
   actualizarTotalBalance();
   actualizarReportes();
   botonesDeEdicionOperacion();
+
 }
+
+
+//////////// EDITAR OPERACIÓN ///////////////////
 
 const botonesDeEdicionOperacion = () => {
 
@@ -287,6 +309,11 @@ $editarNuevaOperacion.addEventListener("submit", (event) => {
 
 });
 
+
+
+
+//////////// SECCIÓN BALANCE /////////////////7
+
 const actualizarTotalBalance = () => {
   const datos = funciones.obtenerDatos("operaciones");
  
@@ -307,6 +334,11 @@ const actualizarTotalBalance = () => {
 };
 
 
+
+  
+
+////////////// SECCIÓN REPORTES //////////////////
+
 const actualizarReportes = () => {
   const datos = funciones.obtenerDatos("operaciones");
 
@@ -321,7 +353,7 @@ const actualizarReportes = () => {
 
 const totalesCategoriasReporte = (array) => {
   const datos = funciones.obtenerDatos("operaciones");
-  console.log(datos)
+
   
   for (const operacion of array) {
     $categoriasReporte.innerHTML += `<div class="flex flex-col justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
@@ -333,10 +365,105 @@ const totalesCategoriasReporte = (array) => {
 
 
 
+// Evento para agregar una nueva categoría
+$crearNuevaCategoria.addEventListener("submit", (evento) => {
+  evento.preventDefault();
+
+  const nuevaCategoria = {
+    id: crypto.randomUUID(),
+    nombre: evento.target[0].value.trim()
+  };
+
+  if (nuevaCategoria.nombre === "") return; // Evita agregar categorías vacías
+
+  funciones.agregarCategoria(nuevaCategoria); // Agrega la categoría al almacenamiento
+
+  const categoriasActualizadas = funciones.obtenerDatos("categoria");   // Volver a cargar las categorías desde el almacenamiento
+
+  pintarCategoria(categoriasActualizadas);   // Pinta las categorías en pantalla
+  evento.target[0].value = "";   // Limpia input después de agregar
+});
 
 
+// Función para pintar las categorías
+function pintarCategoria(array) {
+  $listaCategorias.innerHTML = ""; // Limpiamos antes de volver a dibujar
+
+  for (const categoria of array) {
+    $listaCategorias.innerHTML += `
+      <div class="flex justify-between py-3">
+        <span class="bg-violet-200 text-violet-600 text-xs p-1 rounded">${categoria.nombre}</span>
+        <div class="flex gap-4 text-xs text-pink-500">
+          <button class="button-edit" id="${categoria.id}">Editar</button>
+          <button class="button-delete" id="${categoria.id}">Eliminar</button>
+        </div>
+      </div>
+    `
+    $filtroCategoriasOperacion.innerHTML += ` 
+      <option value="${categoria.nombre}">${categoria.nombre}</option>
+    `;     // Agregue la categoría al select de nueva operación
+
+    $selectFiltroCategorias.innerHTML += `
+      <option value="${categoria.nombre}">${categoria.nombre}</option>
+      `; // Agregue la categoría al select de filtros por categoria
+  }
+
+  botonesDeEdicionCategorias();
+}
 
 
+const botonesDeEdicionCategorias = () => {
+
+  const $$arrayEditarBotonCategoria = $$('.button-edit');
+  const $$arrayEliminarBotonCategoria = $$('.button-delete');
+ 
+  $$arrayEliminarBotonCategoria.forEach( boton => {
+    boton.addEventListener('click', (e) => {
+      const nuevasCategorias = funciones.eliminarCategoria(e.target.id)
+      pintarCategoria(nuevasCategorias);
+    })
+  });
+
+  
+  $$arrayEditarBotonCategoria.forEach((boton) => {
+    boton.addEventListener('click', (e) => {
+      mostrarElemento([$seccionEditarCategoria]);
+      ocultarElemento([$categorias]);
+
+      const datos = funciones.obtenerDatos("categoria");
+      const categoriaParaEditar = datos.find(elem => elem.id === e.target.id);
+      
+      $inputCategoria.value = categoriaParaEditar.nombre
+      $editarCategoria.id = categoriaParaEditar.id;
+    })
+
+  })
+}
+
+
+$editarCategoria.addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  const datos = funciones.obtenerDatos("categoria");
+  const categoriaParaEditar = datos.find(elem => elem.id === event.target.id);
+
+  if (!categoriaParaEditar) {
+    console.error("No se encontró la operación a editar");
+    return;
+  }
+
+  const nuevosDatos = {  
+    nombre: event.target[0].value
+  };
+
+  const datosModificados = funciones.editarCategoria(categoriaParaEditar.id, nuevosDatos);
+
+  pintarCategoria(datosModificados);
+  ocultarElemento([$seccionEditarCategoria]);
+  mostrarElemento([$categorias]);
+
+  console.log(nuevosDatos.nombre)
+});
 
 
 
@@ -349,4 +476,9 @@ window.onload = () => {
   actualizarReportes();
   botonesDeEdicionOperacion();
   totalesCategoriasReporte(datos);
+
+  const categoriasGuardadas = funciones.obtenerDatos("categoria") || [];
+  pintarCategoria(categoriasGuardadas);
+
+  botonesDeEdicionCategorias();
 }
