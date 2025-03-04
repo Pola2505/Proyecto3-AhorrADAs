@@ -116,6 +116,7 @@ export default {
   obtenerDatos,
   guardarDatos,
   agregarOperacion,
+  agregarCategoria,
   filtrarPorTipo,
   filtrarPorCategoria,
   filtrarPorFecha,
