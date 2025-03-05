@@ -1,19 +1,22 @@
 import funciones from "./funciones.js"
 
+// ----------------------------- Funciones para atrapar los elementos del DOM 
+
 function $(element) {
   return document.querySelector(element)
 }
 
-// Estos son todos mis elementos de HTML
-const $botonFiltros = $("#boton-filtros")
-const $filtros = $("#filtros-contenido")
+function $$(element) {
+  return document.querySelectorAll(element)
+}
 
-const $seccionBalance = $('#seccion-balance')
-const $seccionFiltros = $('#seccion-filtros')
-const $seccionOperaciones = $('#seccion-operaciones')
-const $botonNuevaOperacion = $('#boton-nueva-operacion')
-const $seccionNuevaOperacion = $('#seccion-nueva-operacion')
-const $editarNuevaOperacion = $('#editar-nueva-operacion')
+// ----------------------------- Elementos del DOM atrapados
+
+const $botonFiltros = $("#boton-filtros");
+const $filtros = $("#filtros-contenido");
+
+const $seccionNuevaOperacion = $('#seccion-nueva-operacion');
+const $editarNuevaOperacion = $('#editar-nueva-operacion');
 
 const $menu = $('#menu');
 const $categorias = $('#categorias-container');
@@ -37,8 +40,8 @@ const $ganancias = $('#ganancias');
 const $gastos = $('#gastos');
 const $total = $('#total');
 
-const $resumenReportes = $("#reportes-resumen");  // Contenedor del resumen
-const $imagenReportes = $("#imagen-reportes");  // Imagen que debe desaparecer
+const $resumenReportes = $("#reportes-resumen");  
+const $imagenReportes = $("#imagen-reportes");  
 
 const $editOperacionInput = $('#edit-operacion-input');
 const $editOperacionMonto = $('#edit-operacion-monto');
@@ -47,12 +50,7 @@ const $editFiltroCategorias = $('#edit-filtro-categorias');
 const $editFiltroDesde = $('#edit-filtro-desde');
 
 const $seccionEditarCategoria = $('#seccion-editar-categorias');
-
-
-
-
 const $crearNuevaCategoria = $('#crear-nueva-categoria');
-
 const $inputCategoria = $('#categoria-input');
 const $botonAgregarCategoria = $('#boton-agregar-categoria');
 const $listaCategorias = $('#lista-categorias'); // Contenedor donde se mostrarán las categorías
@@ -66,11 +64,7 @@ const $mesMayorGasto = $('#mes-mayor-gasto');
 
 const $editarCategoria = $('#editar-categoria');
 
-
-
-
-
-// Función para mostrar y ocultar filtros
+// ----------------------------- Función para mostrar y ocultar filtros
 
 $botonFiltros.addEventListener("click", function () {
   if ($filtros.classList.contains("hidden")) {
@@ -83,19 +77,13 @@ $botonFiltros.addEventListener("click", function () {
 });
 
 
-
-// Funciones para buscar los elementos del DOM
-
-const $$ = (element) => document.querySelectorAll(element);
-
-
-// El menu mobile icono 
+// ----------------------------- El menu mobile icono 
 
 $('#menu-icono').addEventListener('click', () => {
   $menu.classList.toggle('hidden');
 })
 
-// Vistas - navegacion
+// ----------------------------- Vistas - navegacion
 
 $('#nav-categorias').addEventListener('click', (event) => {
   event.preventDefault();
@@ -127,7 +115,7 @@ $('#boton-nueva-operacion').addEventListener('click', (event) => {
 })
 
 
-//  Funciones auxiliares o generales 
+// ----------------------------- Funciones auxiliares o generales 
 
 const mostrarElemento = (selectors) => {
   for (const selector of selectors) {
@@ -144,7 +132,7 @@ const ocultarElemento = (selectors) => {
 
 
 
-//  Funcion de creacion de una nueva operacion
+// ----------------------------- Funcion de crear una nueva operacion
 
 $crearNuevaOperacion.addEventListener("submit", (evento) => {
   evento.preventDefault();
@@ -169,7 +157,7 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
 
 
 
-/* Filtro por tipo de gasto o ganancia*/
+// ----------------------------- Filtro por tipo de gasto o ganancia
 
 $selectFiltroTipo.addEventListener("input", (e) => {
   const datos = funciones.obtenerDatos("operaciones")
@@ -183,7 +171,7 @@ $selectFiltroTipo.addEventListener("input", (e) => {
 })
 
 
-/* Filtro por categorias*/
+// ----------------------------- Filtro por categorias
 
 $selectFiltroCategorias.addEventListener("input", (e) => {
   const datos = funciones.obtenerDatos("operaciones")
@@ -196,7 +184,7 @@ $selectFiltroCategorias.addEventListener("input", (e) => {
 })
 
 
-/* Filtro por fecha*/
+// ----------------------------- Filtro por fecha
 
 $filtroDesde.addEventListener("input", (e) => {
   const datos = funciones.obtenerDatos("operaciones"); // Obtener todas las operaciones
@@ -216,7 +204,7 @@ $filtroDesde.addEventListener("input", (e) => {
 
 
 
-// 2️⃣ Agregar el evento después de definir ordenarDatos
+// -----------------------------  Agregar el evento después de definir ordenarDatos
 
 $selectFiltroOrden.addEventListener("input", (e) => {
   const datosOrdenados = funciones.ordenarDatos(e.target.value);
@@ -244,12 +232,12 @@ function pintarDatos(array) {
       const signoMonto = operacion.tipo === "ganancias" ? `+` : `-`;
 
       return `
-        <div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1">
-          <span class="text-left font-semibold w-1/4">${operacion.descripcion}</span>
-          <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/6">${operacion.categoria}</span>
-          <span class="text-center text-sm w-1/6">${operacion.fecha}</span>
-          <span class="text-center font-semibold w-1/6 ${colorMonto}">${signoMonto}$${operacion.monto}</span> 
-          <div class="flex gap-4 text-xs text-pink-500 w-1/6 justify-end">
+        <div class="flex justify-between items-center w-full bg-gray-100 p-3 rounded-lg shadow-md m-1 box-border">
+          <span class="text-left font-semibold w-1/4 text-xs md:text-base">${operacion.descripcion}</span>
+          <span class="text-center bg-violet-200 text-violet-600 text-xs p-1 rounded m-1 w-1/5 box-border">${operacion.categoria}</span>
+          <span class="text-center text-sm w-1/6 text-xs md:text-base">${operacion.fecha}</span>
+          <span class="text-xs md:text-base text-center font-semibold w-1/6 ${colorMonto}">${signoMonto}$${operacion.monto}</span> 
+          <div class="flex flex-col md:flex-row gap-4 text-xs text-pink-500 w-1/6 justify-end">
             <button id="${operacion.id}" class="hover:underline editar-boton">Editar</button>
             <button id="${operacion.id}" class="hover:underline eliminar-boton">Eliminar</button>
           </div>
@@ -276,10 +264,6 @@ function pintarDatos(array) {
   mostrarMesMayorGasto(array);
 
 }
-
-
-
-
 
 //////////// EDITAR OPERACIÓN ///////////////////
 
@@ -341,8 +325,6 @@ $editarNuevaOperacion.addEventListener("submit", (event) => {
   ocultarElemento([$seccionEditarOperacion]);
 
 });
-
-
 
 
 //////////// SECCIÓN BALANCE /////////////////7
@@ -472,7 +454,7 @@ function mostrarResumenPorMes(datos) {
 
 function categoriaMayorGanancia(datos) {
   const gananciasPorCategoria = datos
-    .filter(op => op.tipo === "ganancias") // Filtramos solo ingresos
+    .filter(op => op.tipo === "ganancias") 
     .reduce((acc, { categoria, monto }) => {
       acc[categoria] = (acc[categoria] || 0) + monto;
       return acc;
@@ -586,7 +568,8 @@ function mostrarMesMayorGasto(datos) {
     ;
 }
 
-// Evento para agregar una nueva categoría
+// ----------------------------- Evento para agregar una nueva categoría
+
 $crearNuevaCategoria.addEventListener("submit", (evento) => {
   evento.preventDefault();
 
@@ -605,7 +588,8 @@ $crearNuevaCategoria.addEventListener("submit", (evento) => {
   evento.target[0].value = "";   // Limpia input después de agregar
 });
 
-// Función para pintar las categorías
+// ----------------------------- Función para pintar las categorías
+
 function pintarCategoria(array) {
   $listaCategorias.innerHTML = ""; // Limpiamos antes de volver a dibujar
 
@@ -630,6 +614,8 @@ function pintarCategoria(array) {
 
   botonesDeEdicionCategorias();
 }
+
+// -----------------------------  Funcion para editar y eliminar las categorias
 
 const botonesDeEdicionCategorias = () => {
 
@@ -659,6 +645,7 @@ const botonesDeEdicionCategorias = () => {
   })
 }
 
+// -----------------------------  Evento submit que carga las categorias editadas despues del cambio
 
 $editarCategoria.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -699,4 +686,12 @@ window.onload = () => {
   pintarCategoria(categoriasGuardadas);
 
   botonesDeEdicionCategorias();
+  botonesDeEdicionOperacion();
+
+  mostrarResumen(datos);
+  mostrarResumenPorMes(datos);
+  mostrarCategoriaMayorGanancia(datos);
+  mostrarCategoriaMayorGasto(datos);
+  mostrarMesMayorGanancia(datos);
+  mostrarMesMayorGasto(datos);
 }

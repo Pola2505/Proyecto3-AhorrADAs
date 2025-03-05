@@ -187,7 +187,7 @@
             <section id="seccion-operaciones"
                 class="flex flex-col relative grow lg:w-1/2 max-h-screen min-h-screen bg-bgSecondary rounded-lg shadow-2xl p-6 m-6">
 
-                <h1 class="text-3xl font-bold text-textPrimary xl:text-[40px]">Operaciones</h1>
+                <h1 class="text-lg font-bold text-textPrimary md:text-3xl">Operaciones</h1>
 
                 <button id="boton-nueva-operacion"
                     class="absolute -top-5 right-10 w-44 sm:w-44 md:w-56 lg:w-48 bg-brandPrimary text-white text-1xl font-medium rounded-lg p-3 mt-10">
@@ -195,11 +195,11 @@
 
                 <div id="columnas-categorias" class="flex flex-row justify-between pt-10 pb-2 px-5 hidden">
 
-                    <p class="font-semibold text-left">Descripción</p>
-                    <p class="font-semibold text-left">Categoría</p>
-                    <p class="font-semibold text-right">Fecha</p>
-                    <p class="font-semibold text-right">Monto</p>
-                    <p class="font-semibold text-right">Acciones</p>
+                    <p class="font-semibold text-left  text-sm md:text-base mx-1">Descripción</p>
+                    <p class="font-semibold text-left  text-sm md:text-base mx-1">Categoría</p>
+                    <p class="font-semibold text-right text-sm md:text-base mx-1">Fecha</p>
+                    <p class="font-semibold text-right text-sm md:text-base mx-1">Monto</p>
+                    <p class="font-semibold text-right text-sm md:text-base mx-1">Acciones</p>
 
                 </div>
 
@@ -337,12 +337,6 @@
                     <select id="edit-filtro-categorias"
                         class="w-full mb-4 bg-bgSecondary border-solid border border-texto rounded-lg p-2 text-1xl font-sans text-textPrimary font-regular ">
                         <option value="todas">Todas</option>
-                        <option value="comida">Comida</option>
-                        <option value="servicios">Servicios</option>
-                        <option value="salidas">Salidas</option>
-                        <option value="educacion">Educación</option>
-                        <option value="transporte">Transporte</option>
-                        <option value="trabajo">Trabajo</option>
                     </select>
                 </div>
 
@@ -376,7 +370,7 @@
                 <h2 class="text-3xl font-bold text-textPrimary mb-10 tracking-wide xl:text-[40px]">Categorías</h2>
                 <label class="font-semibold text-textPrimary tracking-wide" for="categoria-input">Nombre</label>
 
-                <form id="crear-nueva-categoria" class="mt-3 flex justify-between gap-2">
+                <form id="crear-nueva-categoria" class="mt-3 flex flex-col md:flex-row justify-between gap-2">
 
                     <input id="categoria-input" class="grow rounded border border-gray" type="text"></input>
                     <button id="boton-agregar-categoria"
