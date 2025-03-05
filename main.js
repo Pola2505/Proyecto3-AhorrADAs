@@ -51,7 +51,7 @@ const $editFiltroDesde = $('#edit-filtro-desde');
 
 const $seccionEditarCategoria = $('#seccion-editar-categorias');
 const $crearNuevaCategoria = $('#crear-nueva-categoria');
-const $inputCategoria = $('#categoria-input');
+const $inputCategoria = $('#edit-categoria-input');
 const $botonAgregarCategoria = $('#boton-agregar-categoria');
 const $listaCategorias = $('#lista-categorias'); // Contenedor donde se mostrarán las categorías
 
