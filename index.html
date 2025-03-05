@@ -8,6 +8,9 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <title>AhorrADAs</title>
 
     <script>
@@ -32,7 +35,10 @@
                         // El color de peligro se utiliza para indicar errores, como marcar un campo obligatorio en un campo de texto.
                         dangerPrimary: '#DC2626',
 
-                    }
+                    },
+                    fontFamily: {
+                        roboto: ["Roboto", "sans-serif"],
+                    },
                 }
             }
         }
@@ -42,7 +48,7 @@
 </head>
 
 
-<body class="bg-bgPrimary">
+<body class="bg-bgPrimary font-roboto">
 
     <!-------------------------------------------------------------- HEADER con el menú de navegación ----------------------------------------------------------------------->
 
