@@ -64,6 +64,10 @@ const $mesMayorGasto = $('#mes-mayor-gasto');
 
 const $editarCategoria = $('#editar-categoria');
 
+const $cancelarOperacionBtn = $('#cancelar-operacion-btn');
+const $cancelarEditOperacionBtn = $('#cancelar-edit-operacion-btn');
+const $cancelarCategoriaBtn = $('#cancelar-categoria-btn');
+
 // ----------------------------- Función para mostrar y ocultar filtros
 
 $botonFiltros.addEventListener("click", function () {
@@ -145,6 +149,7 @@ $crearNuevaOperacion.addEventListener("submit", (evento) => {
     categoria: evento.target[3].value,
     fecha: dayjs(evento.target[4].value).format("YYYY-MM-DD")
   }
+  
 
   funciones.agregarOperacion(nuevaOperacion)
 
@@ -670,6 +675,22 @@ $editarCategoria.addEventListener("submit", (event) => {
 
   console.log(nuevosDatos.nombre)
 });
+
+// Escuchador de evento click para el boton de cancelar operacion y editar operacion
+
+$cancelarOperacionBtn.addEventListener('click', () => {
+  ocultarElemento([$seccionNuevaOperacion]);
+  mostrarElemento([$balance]);
+})
+$cancelarEditOperacionBtn.addEventListener('click', () => {
+  ocultarElemento([$seccionEditarOperacion]);
+  mostrarElemento([$balance]);
+})
+
+$cancelarCategoriaBtn.addEventListener('click', () => {
+  ocultarElemento([$seccionEditarCategoria]);
+  mostrarElemento([$categorias]);
+})
 
 
 
