@@ -225,7 +225,7 @@ function pintarDatos(array) {
     ocultarElemento([$columnasCategorias]);
     $operacionesCargadas.innerHTML = `
     <div class="flex flex-col grow justify-center items-center">
-    <img src="./imagenes/wallet.svg" alt="Ilustración de billetera" class="w-40 sm:w-60">
+    <img src="./imagenes/wallet.svg" alt="Ilustración de billetera" class="w-96 pt-24">
     <p class="text-2xl text-textPrimary mt-4 mb-2">Sin resultados</p>
     <p class="text-1xl text-textPrimary mb-6"> Cambia los filtros o agrega operaciones </p>
     </div>

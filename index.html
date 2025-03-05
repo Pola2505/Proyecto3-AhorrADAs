@@ -181,17 +181,19 @@
                             </div>
             </section>
 
-
+            <!-- absolute -top-5 right-10 -->
             <!------------------------------------------------------------ Sección OPERACIONES ---------------------------------------------------------------------------->
 
             <section id="seccion-operaciones"
                 class="flex flex-col relative grow lg:w-1/2 min-h-screen bg-bgSecondary rounded-lg shadow-2xl p-6 m-6">
 
-                <h1 class="text-lg font-bold text-textPrimary md:text-3xl">Operaciones</h1>
+                <div class="flex flex-col gap-2 items-center md:flex md:flex-row md:justify-between">
+                    <h1 class="text-lg font-bold text-textPrimary md:text-3xl">Operaciones</h1>
 
-                <button id="boton-nueva-operacion"
-                    class="absolute -top-5 right-10 w-44 sm:w-44 md:w-56 lg:w-48 bg-brandPrimary text-white text-1xl font-medium rounded-lg p-3 mt-10">
+                    <button id="boton-nueva-operacion"
+                    class="w-44 sm:w-44 md:w-56 lg:w-48 bg-brandPrimary text-white text-1xl font-medium rounded-lg p-3">
                     + Nueva Operación</button>
+                </div>
 
                 <div id="columnas-categorias" class="flex flex-row justify-between pt-10 pb-2 px-5 hidden">
 
@@ -204,9 +206,9 @@
                 </div>
 
 
-                <div id="operaciones-cargadas" class="flex flex-col w-full content-center items-center mt-6">
+                <div id="operaciones-cargadas" class="flex flex-col w-full items-center mt-6">
 
-                    <img src="./imagenes/wallet.svg" alt="Ilustración de billetera" class="w-64 sm:w-60">
+                    <img src="./imagenes/wallet.svg" alt="Ilustración de billetera" class="w-96 pt-24">
                     <p class="text-2xl text-textPrimary mt-4 mb-2">Sin resultados</p>
                     <p class="text-1xl text-textPrimary mb-6"> Cambia los filtros o agrega operaciones </p>
 
@@ -378,7 +380,7 @@
                         
                 </form>
 
-                <div class="pt-7">
+                <div>
 
                     <div id="lista-categorias" class="pt-7"></div>
 
@@ -488,7 +490,7 @@
             </div>
 
 
-            <div id="imagen-reportes" class="hidden">
+            <div id="imagen-reportes" class="hidden bg-bgSecondary rounded-lg p-8 shadow-2xl mx-12 flex flex-col justify-center">
 
                 <img src="./galeria/reportes.svg" alt="reportes" class="w-96 mx-auto">
                 <h3 class="text-2xl text-textPrimary mt-4 mb-2 text-center">Operaciones insuficientes</h3>
