@@ -615,6 +615,10 @@ function pintarCategoria(array) {
     $selectFiltroCategorias.innerHTML += `
       <option value="${categoria.nombre}">${categoria.nombre}</option>
       `; // Agregue la categoría al select de filtros por categoria
+
+      $editFiltroCategorias.innerHTML += `
+      <option value="${categoria.nombre}">${categoria.nombre}</option>`; 
+      // Agrega la categoria al select de editar operacion
   }
 
   botonesDeEdicionCategorias();
