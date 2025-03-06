@@ -696,22 +696,37 @@ $cancelarCategoriaBtn.addEventListener('click', () => {
   mostrarElemento([$categorias]);
 })
 
+const categoriasIniciales = [
 
+  { id: crypto.randomUUID(), nombre: 'Comida' },
+  { id: crypto.randomUUID(), nombre: 'Servicios' },
+  { id: crypto.randomUUID(), nombre: 'Transporte' },
+  { id: crypto.randomUUID(), nombre: 'Trabajo' },
+  { id: crypto.randomUUID(), nombre: 'Educacion' },
+  { id: crypto.randomUUID(), nombre: 'Salidas' }
+
+]
 
 
 window.onload = () => {
-  const datos = funciones.obtenerDatos("operaciones")
-
+  const datos = funciones.obtenerDatos("operaciones") || [];
   pintarDatos(datos);
 
   actualizarTotalBalance();
   actualizarReportes();
   botonesDeEdicionOperacion();
-  const categoriasGuardadas = funciones.obtenerDatos("categoria") || [];
-  pintarCategoria(categoriasGuardadas);
 
+  // Verificar si ya hay categorías guardadas
+  let categoriasGuardadas = funciones.obtenerDatos("categoria");
+
+  if (!categoriasGuardadas || categoriasGuardadas.length === 0) {
+    // Si no hay categorías guardadas, guardar las predeterminadas
+    funciones.guardarDatos("categoria", categoriasIniciales);
+    categoriasGuardadas = categoriasIniciales;
+  }
+
+  pintarCategoria(categoriasGuardadas);
   botonesDeEdicionCategorias();
-  botonesDeEdicionOperacion();
 
   mostrarResumen(datos);
   mostrarResumenPorMes(datos);
@@ -719,4 +734,4 @@ window.onload = () => {
   mostrarCategoriaMayorGasto(datos);
   mostrarMesMayorGanancia(datos);
   mostrarMesMayorGasto(datos);
-}
+};
